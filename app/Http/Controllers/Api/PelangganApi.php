@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use App\Pelanggan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PelangganApi extends Controller
 {
@@ -14,7 +17,7 @@ class PelangganApi extends Controller
 //        $this->middleware('auth');
         $this->Pelanggan = new Pelanggan();
 
-    } 
+    }
 
     public function pelanggan_all()
     {
@@ -35,74 +38,100 @@ class PelangganApi extends Controller
         }
     }
     public function insert_pelanggan(Request $request){
-        $pelanggan = new Teknisi();
+        $pelanggan = new Pelanggan();
+        $users = new User();
 
-        $pelanggan_foto = $request->file('teknisi_foto');
-        $pelanggan_sertifikat = $request->file('teknisi_sertifikat');
+        $pelanggan_foto = $request->file('pelanggan_foto');
 
-        if ($pelanggan_foto != null ){
-            if ($pelanggan_sertifikat != null){
-                $pelanggan->teknisi_nama = $request->teknisi_nama;
-                $pelanggan->teknisi_alamat = $request->teknisi_alamat;
-                $pelanggan->teknisi_lat = $request->teknisi_lat;
-                $pelanggan->teknisi_lng = $request->teknisi_lng;
-                $pelanggan->teknisi_hp = $request->teknisi_hp;
-                $pelanggan->teknisi_total_score = $request->teknisi_total_score;
-                $pelanggan->teknisi_total_responden = $request->teknisi_total_responden;
-                $pelanggan->teknisi_deskripsi = $request->teknisi_deskripsi;
-                $pelanggan->teknisi_foto = $request->teknisi_nama.'_'.$pelanggan_foto->getClientOriginalName();
-                $pelanggan->teknisi_sertifikat = $request->teknisi_nama.'_'.$pelanggan_sertifikat->getClientOriginalName();
-                $pelanggan->save();
-                $pelanggan_foto->move(public_path('foto-teknisi'), $request->teknisi_nama.'_'.$pelanggan_foto->getClientOriginalName());
-                $pelanggan_sertifikat->move(public_path('foto-sertifikat'), $request->teknisi_nama.'_'.$pelanggan_sertifikat->getClientOriginalName());
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Post Berhasil Disimpan!',
-                ], 200);
-            }else{
-                $pelanggan->teknisi_nama = $request->teknisi_nama;
-                $pelanggan->teknisi_alamat = $request->teknisi_alamat;
-                $pelanggan->teknisi_lat = $request->teknisi_lat;
-                $pelanggan->teknisi_lng = $request->teknisi_lng;
-                $pelanggan->teknisi_hp = $request->teknisi_hp;
-                $pelanggan->teknisi_total_score = $request->teknisi_total_score;
-                $pelanggan->teknisi_total_responden = $request->teknisi_total_responden;
-                $pelanggan->teknisi_deskripsi = $request->teknisi_deskripsi;
-                $pelanggan->teknisi_foto = $request->teknisi_nama.'_'.$pelanggan_foto->getClientOriginalName();
-                $pelanggan->save();
-                $pelanggan_foto->move(public_path('foto-teknisi'), $request->teknisi_nama.'_'.$pelanggan_foto->getClientOriginalName());
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Post Berhasil Disimpan!',
-                ], 200);
-            }
-        }else{
-            $pelanggan->teknisi_nama = $request->teknisi_nama;
-            $pelanggan->teknisi_alamat = $request->teknisi_alamat;
-            $pelanggan->teknisi_lat = $request->teknisi_lat;
-            $pelanggan->teknisi_lng = $request->teknisi_lng;
-            $pelanggan->teknisi_hp = $request->teknisi_hp;
-            $pelanggan->teknisi_total_score = $request->teknisi_total_score;
-            $pelanggan->teknisi_total_responden = $request->teknisi_total_responden;
-            $pelanggan->teknisi_deskripsi = $request->teknisi_deskripsi;
-            $pelanggan->save();
+        if($this->email_check($request->email, "pelanggan") == 1)
+        {
             return response()->json([
-                'success' => true,
-                'message' => 'Post Berhasil Disimpan!',
-            ], 200);
+                'success' => false,
+                'message' => 'Maaf, Email sudah terdaftar',
+            ], 500);
+        }
+        else
+        {
+            if ($pelanggan_foto != null )
+            {
+
+                $users->email = $request->email;
+                $users->name = $request->pelanggan_nama;
+                $users->level = "pelanggan";
+                $users->password = Hash::make($request->password);
+                $users->save();
+
+                if ($users)
+                {
+                    $pelanggan->email = $request->email;
+                    $pelanggan->pelanggan_nama = $request->pelanggan_nama;
+                    $pelanggan->pelanggan_alamat = $request->pelanggan_alamat;
+                    $pelanggan->pelanggan_lat = $request->pelanggan_lat;
+                    $pelanggan->pelanggan_lng = $request->pelanggan_lng;
+                    $pelanggan->pelanggan_hp = $request->pelanggan_hp;
+                    $pelanggan->pelanggan_foto = $request->pelanggan_nama.'_'.$pelanggan_foto->getClientOriginalName();
+                    $pelanggan->save();
+                    $pelanggan_foto->move(public_path('foto-pelanggan'), $request->pelanggan_nama.'_'.$pelanggan_foto->getClientOriginalName());
+                }
+                if ($users && $pelanggan)
+                {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Post Berhasil Disimpan!',
+                    ], 200);
+                }
+                else
+                {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Gagal Disimpan!',
+                    ], 404);
+                }
+            }
+            else
+            {
+                $users->email = $request->email;
+                $users->name = $request->pelanggan_nama;
+                $users->level = "pelanggan";
+                $users->password = Hash::make($request->password);
+                $users->save();
+                if ($users)
+                {
+                    $pelanggan->email = $request->email;
+                    $pelanggan->pelanggan_nama = $request->pelanggan_nama;
+                    $pelanggan->pelanggan_alamat = $request->pelanggan_alamat;
+                    $pelanggan->pelanggan_lat = $request->pelanggan_lat;
+                    $pelanggan->pelanggan_lng = $request->pelanggan_lng;
+                    $pelanggan->pelanggan_hp = $request->pelanggan_hp;
+                    $pelanggan->save();
+                }
+
+                if ($users && $pelanggan)
+                {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Post Berhasil Disimpan!',
+                    ], 200);
+                }
+                else
+                {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Gagal Disimpan!',
+                    ], 404);
+                }
+            }
         }
     }
 
     public function update_pelanggan($id,Request $request){
         $pelanggan = Pelanggan::find($id);
-        $pelanggan->teknisi_nama = $request->teknisi_nama;
-        $pelanggan->teknisi_alamat = $request->teknisi_alamat;
-        $pelanggan->teknisi_lat = $request->teknisi_lat;
-        $pelanggan->teknisi_lng = $request->teknisi_lng;
-        $pelanggan->teknisi_hp = $request->teknisi_hp;
-        $pelanggan->teknisi_total_score = $request->teknisi_total_score;
-        $pelanggan->teknisi_total_responden = $request->teknisi_total_responden;
-        $pelanggan->teknisi_deskripsi = $request->teknisi_deskripsi;
+        $pelanggan->email = $request->email;
+        $pelanggan->pelanggan_nama = $request->pelanggan_nama;
+        $pelanggan->pelanggan_alamat = $request->pelanggan_alamat;
+        $pelanggan->pelanggan_lat = $request->pelanggan_lat;
+        $pelanggan->pelanggan_lng = $request->pelanggan_lng;
+        $pelanggan->pelanggan_hp = $request->pelanggan_hp;
         $pelanggan->save();
         if($pelanggan){
             echo json_encode(array('kode' => 200, 'status' => "Berhasil"));
@@ -110,12 +139,30 @@ class PelangganApi extends Controller
             echo json_encode(array('kode' => 404, 'status' => "Gagal"));
         }
     }
+
     public function delete_pelanggan($id){
-        $pelanggan = DB::table('teknisi')->where('teknisi_id', $id)->delete();
+        $pelanggan = DB::table('pelanggan')->where('pelanggan_id', $id)->delete();
         if($pelanggan){
             echo json_encode(array('kode' => 200, 'status' => "Berhasil"));
         }else{
             echo json_encode(array('kode' => 404, 'status' => "Gagal"));
         }
+    }
+
+    public  function email_check($email, $level)
+    {
+        $checkEmail = DB::table('users')
+            ->where('email', '=', $email)
+            ->where('level', '=', $level)
+            ->count();
+        if ($checkEmail > 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 }

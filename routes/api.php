@@ -42,6 +42,13 @@ Route::post('/jenis-hp-insert', 'Api\JenisHpApi@insert_jenis_hp');
 Route::put('/jenis-hp-update/{id}', 'Api\JenisHpApi@update_jenis_hp');
 Route::put('/jenis-hp-delete/{id}', 'Api\JenisHpApi@delete_jenis_hp');
 
+//Login
+Route::post('/login', 'Api\AuthApi@login');
+
+// Register
+Route::post('/register-service', 'Api\AuthApi@register_servicer');
+Route::post('/register-buyer', 'Api\AuthApi@register_buyer');
+
 
 Route::get('/user-all/{token}', 'ApiController@user_all');
 Route::get('/user-one/{token}/{reference}/{value}', 'ApiController@user_one_by');
