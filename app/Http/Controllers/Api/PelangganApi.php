@@ -14,9 +14,7 @@ class PelangganApi extends Controller
     private $pelanggan;
     public function __construct()
     {
-//        $this->middleware('auth');
         $this->Pelanggan = new Pelanggan();
-
     }
 
     public function pelanggan_all()

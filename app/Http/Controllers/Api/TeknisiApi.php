@@ -12,11 +12,10 @@ use Illuminate\Support\Facades\Hash;
 class TeknisiApi extends Controller
 {
     private $Teknisi;
+
     public function __construct()
     {
-//        $this->middleware('auth');
         $this->Teknisi = new Teknisi();
-
     }
 
     public function teknisi_all()
@@ -28,6 +27,54 @@ class TeknisiApi extends Controller
             echo json_encode(array('kode'=> 2,'pesan' => 'data tidak ditemukan'));
         }
     }
+
+    public function find_teknisi_nearby_location($latitude, $longitude)
+    {
+        $location = DB::table('teknisi')
+            ->select(
+                'teknisi.*', 'jenis_hp.*', 'jenis_kerusakan_hp.*',
+                DB::raw(sprintf(
+                    '(6371 * acos(cos(radians(%1$.7f)) * cos(radians(teknisi.teknisi_lat)) * cos(radians(teknisi.teknisi_lng) - radians(%2$.7f)) + sin(radians(%1$.7f)) * sin(radians(teknisi.teknisi_lat)))) AS distance',
+                    $latitude,
+                    $longitude
+                ))
+            )
+            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
+            ->join('detail_teknisi_kerusakan_jenis_hp', 'detail_teknisi_kerusakan_jenis_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
+            ->join('jenis_hp', 'detail_teknisi_kerusakan_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
+            ->join('jenis_kerusakan_hp', 'detail_teknisi_kerusakan_jenis_hp.jenis_kerusakan_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
+            ->having('distance', '<', 50)
+            ->orderBy('distance', 'asc')
+            ->get();
+
+        if ($location != null || $location != '') {
+            echo json_encode(array('kode' => 200, 'hasil' => $location));
+        } else {
+            echo json_encode(array('kode' => 404, 'hasil' => $location));
+        }
+    }
+
+    public function search_by($jenis_hp, $jenis_kerusakan)
+    {
+        $teknisiSearch = DB::table('teknisi')
+            ->select('teknisi.*', 'jenis_hp.*', 'jenis_kerusakan_hp.*')
+            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
+            ->join('detail_teknisi_kerusakan_jenis_hp', 'detail_teknisi_kerusakan_jenis_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
+            ->join('jenis_hp', 'detail_teknisi_kerusakan_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
+            ->join('jenis_kerusakan_hp', 'detail_teknisi_kerusakan_jenis_hp.jenis_kerusakan_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
+            ->where('detail_teknisi_kerusakan_jenis_hp.jenis_hp_id', '=', $jenis_hp)
+            ->where('detail_teknisi_kerusakan_jenis_hp.jenis_kerusakan_id', '=', $jenis_kerusakan)
+            ->orderBy('teknisi.teknisi_total_score', 'desc')
+            ->orderBy('teknisi.teknisi_total_responden', 'desc')
+            ->get();
+
+        if (sizeof($teknisiSearch) >= 0) {
+            echo json_encode(array('kode'=> 1,'result' => $teknisiSearch));
+        }else{
+            echo json_encode(array('kode'=> 2,'pesan' => 'Data tidak ditemukan'));
+        }
+    }
+
     public function teknisi_by($reference,$value)
     {
         $data = $this->Teknisi->getTeknisiBy($reference,$value);
@@ -190,6 +237,32 @@ class TeknisiApi extends Controller
         }
     }
 
+    public function insert_teknisi_jenis_hp_keahlian(Request $request){
+        // TODO reference TPA API
+        $rawData = json_decode(file_get_contents("php://input"), true);
+        $deskripsi = $rawData['deskripsi'];
+        $teknisi_id = $rawData['teknisi_id'];
+        $dataJenisHp = $rawData['jenis_hp'];
+        $dataJenisKerusakanHp = $rawData['jenis_kerusakan_hp'];
+
+        $teknisiJenisKerusakanHp = DB::table('teknisi_kerusakan_jenis_hp')->insert(
+            [
+                'deskripsi' => $deskripsi,
+                'teknisi_id' => $teknisi_id
+            ]
+        );
+
+        $detailTeknisiJenisKerusakanHp = DB::table('teknisi_kerusakan_jenis_hp')->insert(
+            [
+                'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
+                'deskripsi' => $deskripsi,
+                'teknisi_id' => $teknisi_id
+            ]
+        );
+
+
+    }
+
     public function update_teknisi($id,Request $request){
         $teknisi = Teknisi::find($id);
         $teknisi->email = $request->email;
@@ -209,6 +282,7 @@ class TeknisiApi extends Controller
             echo json_encode(array('kode' => 404, 'status' => "Gagal"));
         }
     }
+
     public function delete_teknisi($id){
         $teknisi = DB::table('teknisi')->where('teknisi_id', $id)->delete();
         if($teknisi){
