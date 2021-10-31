@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2021 at 02:00 AM
+-- Generation Time: Oct 31, 2021 at 02:53 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -32,7 +32,7 @@ CREATE TABLE `api` (
   `api_nama` text NOT NULL,
   `api_link` text NOT NULL,
   `api_date_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `api`
@@ -87,7 +87,7 @@ CREATE TABLE `beli` (
   `beli_jasa_kurir` enum('Ya','Tidak') NOT NULL,
   `beli_pembeli` int(11) NOT NULL,
   `beli_tgl_booking` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ CREATE TABLE `detail_teknisi_kerusakan_jenis_hp` (
   `teknisi_kerusakan_jenis_hp_id` int(11) NOT NULL,
   `jenis_hp_id` int(11) NOT NULL,
   `jenis_kerusakan_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -127,7 +127,7 @@ CREATE TABLE `foto_jual_produk` (
   `id` int(11) NOT NULL,
   `jual_id` int(11) NOT NULL,
   `path_foto` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -139,7 +139,7 @@ CREATE TABLE `jenis_hp` (
   `jenis_id` int(11) NOT NULL,
   `jenis_nama` varchar(255) NOT NULL,
   `jenis_thumbnail` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `jenis_hp`
@@ -158,7 +158,7 @@ CREATE TABLE `jenis_kerusakan_hp` (
   `id_jenis_kerusakan` int(11) NOT NULL,
   `nama_kerusakan` varchar(255) NOT NULL,
   `deskripsi_kerusakan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -176,7 +176,7 @@ CREATE TABLE `jual` (
   `jual_tujuan` enum('pelanggan','teknisi') NOT NULL,
   `jual_judul` varchar(255) NOT NULL,
   `jual_jenis_hp` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `jual`
@@ -195,7 +195,7 @@ CREATE TABLE `keahlian` (
   `keahlian_id` int(11) NOT NULL,
   `keahlian_jenis_hp` int(11) NOT NULL,
   `keahlian_teknisi` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -207,7 +207,7 @@ CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -228,7 +228,7 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -247,7 +247,7 @@ CREATE TABLE `pelanggan` (
   `pelanggan_date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `pelanggan_lat` text NOT NULL,
   `pelanggan_lng` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `pelanggan`
@@ -271,7 +271,7 @@ CREATE TABLE `pesan` (
   `pesan_pengirim` enum('pelanggan','teknisi') NOT NULL,
   `pesan_date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `pesan_foto` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -291,7 +291,7 @@ CREATE TABLE `produk` (
   `date_update` timestamp NOT NULL DEFAULT current_timestamp(),
   `harga` float NOT NULL DEFAULT current_timestamp(),
   `is_sold_out` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -306,7 +306,7 @@ CREATE TABLE `responden` (
   `responden_skor` int(11) NOT NULL,
   `responden_date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `responden_gambar` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -319,7 +319,7 @@ CREATE TABLE `review` (
   `beli_id` int(11) NOT NULL,
   `nilai` double NOT NULL,
   `isi` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -329,21 +329,21 @@ CREATE TABLE `review` (
 
 CREATE TABLE `teknisi` (
   `teknisi_id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `teknisi_nama` varchar(255) NOT NULL,
-  `teknisi_nama_toko` varchar(255) NOT NULL,
-  `teknisi_alamat` varchar(255) NOT NULL,
-  `teknisi_lat` text NOT NULL,
-  `teknisi_lng` text NOT NULL,
-  `teknisi_hp` varchar(14) NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_nama` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_nama_toko` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_alamat` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_lat` text CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_lng` text CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_hp` varchar(14) CHARACTER SET utf8mb4 NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `teknisi_total_score` int(11) NOT NULL,
   `teknisi_total_responden` int(11) NOT NULL,
-  `teknisi_deskripsi` text NOT NULL,
-  `teknisi_foto` varchar(255) DEFAULT NULL,
-  `teknisi_sertifikat` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `teknisi_deskripsi` text CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_foto` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `teknisi_sertifikat` text CHARACTER SET utf8mb4 DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `teknisi`
@@ -363,7 +363,7 @@ CREATE TABLE `teknisi_kerusakan_jenis_hp` (
   `id` int(11) NOT NULL,
   `deskripsi` text NOT NULL,
   `teknisi_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -373,16 +373,16 @@ CREATE TABLE `teknisi_kerusakan_jenis_hp` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) NOT NULL,
   `akses_id` int(11) NOT NULL,
-  `level` enum('teknisi','pelanggan','admin') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `level` enum('teknisi','pelanggan','admin') NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
