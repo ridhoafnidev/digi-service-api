@@ -105,9 +105,9 @@ class TeknisiApi extends Controller
         if($this->email_check($request->email, "teknisi") == 1)
         {
             return response()->json([
-                'success' => false,
-                'message' => 'Maaf, Email sudah terdaftar',
-            ], 500);
+                'code' => 421,
+                'message' => 'FAILED, user sudah ada',
+            ], 421);
         }
         else
         {
@@ -141,16 +141,16 @@ class TeknisiApi extends Controller
                     if ($users && $teknisi)
                     {
                         return response()->json([
-                            'success' => true,
+                            'code' => 200,
                             'message' => 'Post Berhasil Disimpan!',
                         ], 200);
                     }
                     else
                     {
                         return response()->json([
-                            'success' => false,
-                            'message' => 'Gagal Disimpan!',
-                        ], 404);
+                            'code' => 400,
+                            'message' => 'FAILED',
+                        ], 400);
                     }
                 }
                 else
@@ -181,15 +181,15 @@ class TeknisiApi extends Controller
                     if ($users && $teknisi)
                     {
                         return response()->json([
-                            'success' => true,
+                            'code' => true,
                             'message' => 'Post Berhasil Disimpan!',
                         ], 200);
                     }
                     else
                     {
                         return response()->json([
-                            'success' => false,
-                            'message' => 'Gagal Disimpan!',
+                            'code' => 404,
+                            'message' => 'FAILED',
                         ], 404);
                     }
 
@@ -212,9 +212,9 @@ class TeknisiApi extends Controller
                     $teknisi->teknisi_alamat = $request->teknisi_alamat;
                     $teknisi->teknisi_lat = $request->teknisi_lat;
                     $teknisi->teknisi_lng = $request->teknisi_lng;
-                    $teknisi->teknisi_hp = $request->teknisi_hp;
-                    $teknisi->teknisi_total_score = $request->teknisi_total_score;
-                    $teknisi->teknisi_total_responden = $request->teknisi_total_responden;
+//                    $teknisi->teknisi_hp = $request->teknisi_hp;
+//                    $teknisi->teknisi_total_score = $request->teknisi_total_score;
+//                    $teknisi->teknisi_total_responden = $request->teknisi_total_responden;
                     $teknisi->teknisi_deskripsi = $request->teknisi_deskripsi;
                     $teknisi->save();
                 }
@@ -222,15 +222,15 @@ class TeknisiApi extends Controller
                 if ($users && $teknisi)
                 {
                     return response()->json([
-                        'success' => true,
-                        'message' => 'Post Berhasil Disimpan!',
+                        'code' => true,
+                        'message' => 'SUCCESS',
                     ], 200);
                 }
                 else
                 {
                     return response()->json([
-                        'success' => false,
-                        'message' => 'Gagal Disimpan!',
+                        'code' => false,
+                        'message' => 'FAILED',
                     ], 404);
                 }
             }
