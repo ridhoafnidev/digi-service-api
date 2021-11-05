@@ -43,22 +43,25 @@ class AuthApi extends Controller
             {
                  return response()->json([
                             'code' => 200,
-                            'result' => $data
+                            'result' => $data,
+                            'message' => "SUCCESS"
                         ], 200);
             }
             else
             {
                   return response()->json([
                             'code' => 422,
+                            'result' => "",
                             'message' => "Password salah"
                         ], 422);
                 }
         }
         else
         {
-        
+
             return response()->json([
                             'code' => 404,
+                            'result' => "",
                             'message' => "Data tidak ditemukan"
                         ], 404);
         }

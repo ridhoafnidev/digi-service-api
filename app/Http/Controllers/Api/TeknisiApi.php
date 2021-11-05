@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Teknisi;
+use App\TeknisiKerusakanJenisHp;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -237,7 +238,8 @@ class TeknisiApi extends Controller
         }
     }
 
-    public function insert_teknisi_jenis_hp_keahlian(Request $request){
+    public function insert_teknisi_jenis_hp_keahlian()
+    {
         // TODO reference TPA API
         $rawData = json_decode(file_get_contents("php://input"), true);
         $deskripsi = $rawData['deskripsi'];
@@ -245,20 +247,46 @@ class TeknisiApi extends Controller
         $dataJenisHp = $rawData['jenis_hp'];
         $dataJenisKerusakanHp = $rawData['jenis_kerusakan_hp'];
 
-        $teknisiJenisKerusakanHp = DB::table('teknisi_kerusakan_jenis_hp')->insert(
-            [
-                'deskripsi' => $deskripsi,
-                'teknisi_id' => $teknisi_id
-            ]
-        );
+        $teknisiJenisKerusakanHp = new TeknisiKerusakanJenisHp();
+        $teknisiJenisKerusakanHp->deskripsi = $deskripsi;
+        $teknisiJenisKerusakanHp->teknisi_id = $teknisi_id;
+        $teknisiJenisKerusakanHp->save();
 
-        $detailTeknisiJenisKerusakanHp = DB::table('teknisi_kerusakan_jenis_hp')->insert(
+        for($size = 0; $size < sizeof($dataJenisHp); $size++){
+            $detailTeknisiJenisHp = DB::table('detail_teknisi_jenis_hp')->insert(
             [
                 'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
-                'deskripsi' => $deskripsi,
-                'teknisi_id' => $teknisi_id
-            ]
-        );
+                'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id']
+            ]);
+        }
+       
+
+        for($size = 0; $size < sizeof($dataJenisKerusakanHp); $size++){
+            $detailTeknisiJenisKerusakanHp = DB::table('detail_teknisi_jenis_kerusakan_hp')->insert(
+                [
+                    'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
+                    'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id']
+                ]
+            );
+        }
+
+        if($teknisiJenisKerusakanHp && $detailTeknisiJenisHp && $detailTeknisiJenisKerusakanHp){
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Post Berhasil Disimpan!',
+                'result' => "",
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'code' => 400,
+                'status' => "FAILED",
+                'message' => 'Post Gagal Disimpan!',
+                'result' => "",
+            ], 400);
+        }
 
 
     }
