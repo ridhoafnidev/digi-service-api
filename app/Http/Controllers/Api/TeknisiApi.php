@@ -23,9 +23,17 @@ class TeknisiApi extends Controller
     {
         $data = $this->Teknisi->getTeknisi();
         if ($data) {
-            echo json_encode(array('kode'=> 1,'result' => $data));
+             return response()->json([
+                            'code' => 200,
+                            'result' => $data,
+                            'message' => "SUCCESS"
+                        ], 200);
         }else{
-            echo json_encode(array('kode'=> 2,'pesan' => 'data tidak ditemukan'));
+            return response()->json([
+                            'code' => 404,
+                            'result' => "",
+                            'message' => "FAILED"
+                        ], 404);
         }
     }
 
