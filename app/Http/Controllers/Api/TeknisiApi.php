@@ -50,9 +50,9 @@ class TeknisiApi extends Controller
             )
             ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
             ->join('detail_teknisi_jenis_hp', 'detail_teknisi_jenis_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
-            ->join('detail_teknisi_jenis_kerusakan', 'detail_teknisi_jenis_kerusakan.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
+            ->join('detail_teknisi_jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
             ->join('jenis_hp', 'detail_teknisi_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
-            ->join('jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan.jenis_kerusakan_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
+            ->join('jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.jenis_kerusakan_hp_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
             ->having('distance', '<', 50)
             ->orderBy('distance', 'asc')
             ->get();
