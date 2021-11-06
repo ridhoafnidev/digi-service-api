@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2021 at 02:53 AM
+-- Generation Time: Nov 06, 2021 at 04:02 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -92,15 +92,53 @@ CREATE TABLE `beli` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_teknisi_kerusakan_jenis_hp`
+-- Table structure for table `detail_teknisi_jenis_hp`
 --
 
-CREATE TABLE `detail_teknisi_kerusakan_jenis_hp` (
+CREATE TABLE `detail_teknisi_jenis_hp` (
   `id` int(11) NOT NULL,
   `teknisi_kerusakan_jenis_hp_id` int(11) NOT NULL,
-  `jenis_hp_id` int(11) NOT NULL,
-  `jenis_kerusakan_id` int(11) NOT NULL
+  `jenis_hp_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `detail_teknisi_jenis_hp`
+--
+
+INSERT INTO `detail_teknisi_jenis_hp` (`id`, `teknisi_kerusakan_jenis_hp_id`, `jenis_hp_id`) VALUES
+(1, 14, 1),
+(2, 14, 2),
+(3, 15, 1),
+(4, 15, 2),
+(5, 16, 1),
+(6, 16, 2),
+(7, 17, 1),
+(8, 17, 2),
+(9, 18, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_teknisi_jenis_kerusakan_hp`
+--
+
+CREATE TABLE `detail_teknisi_jenis_kerusakan_hp` (
+  `id` int(11) NOT NULL,
+  `teknisi_kerusakan_jenis_hp_id` int(11) NOT NULL,
+  `jenis_kerusakan_hp_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `detail_teknisi_jenis_kerusakan_hp`
+--
+
+INSERT INTO `detail_teknisi_jenis_kerusakan_hp` (`id`, `teknisi_kerusakan_jenis_hp_id`, `jenis_kerusakan_hp_id`) VALUES
+(1, 15, 1),
+(2, 15, 2),
+(3, 16, 1),
+(4, 16, 2),
+(5, 17, 1),
+(6, 18, 1);
 
 -- --------------------------------------------------------
 
@@ -110,10 +148,10 @@ CREATE TABLE `detail_teknisi_kerusakan_jenis_hp` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -146,7 +184,9 @@ CREATE TABLE `jenis_hp` (
 --
 
 INSERT INTO `jenis_hp` (`jenis_id`, `jenis_nama`, `jenis_thumbnail`) VALUES
-(1, 'xiamoi', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Xiaomi_logo.svg/480px-Xiaomi_logo.svg.png');
+(1, 'xiamoi', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Xiaomi_logo.svg/480px-Xiaomi_logo.svg.png'),
+(2, 'Samsung', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Xiaomi_logo.svg/480px-Xiaomi_logo.svg.png'),
+(3, 'Lenovo', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Xiaomi_logo.svg/480px-Xiaomi_logo.svg.png');
 
 -- --------------------------------------------------------
 
@@ -159,6 +199,14 @@ CREATE TABLE `jenis_kerusakan_hp` (
   `nama_kerusakan` varchar(255) NOT NULL,
   `deskripsi_kerusakan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `jenis_kerusakan_hp`
+--
+
+INSERT INTO `jenis_kerusakan_hp` (`id_jenis_kerusakan`, `nama_kerusakan`, `deskripsi_kerusakan`) VALUES
+(1, 'HP Suka Hang', 'Ditandai dengan sistem yang lemot waktu dipakai, kemudian suka macet (hang) tiba-tiba selama beberapa menit.'),
+(2, 'HP Suka Update Sendiri', 'Ini jenis kerusakan ringan. HP yang sedang tersambung ke internet tiba-tiba mengupdate aplikasi sendiri.');
 
 -- --------------------------------------------------------
 
@@ -205,7 +253,7 @@ CREATE TABLE `keahlian` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -225,8 +273,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -335,12 +383,12 @@ CREATE TABLE `teknisi` (
   `teknisi_alamat` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `teknisi_lat` text CHARACTER SET utf8mb4 NOT NULL,
   `teknisi_lng` text CHARACTER SET utf8mb4 NOT NULL,
-  `teknisi_hp` varchar(14) CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_hp` varchar(14) CHARACTER SET utf8mb4 DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `teknisi_total_score` int(11) NOT NULL,
-  `teknisi_total_responden` int(11) NOT NULL,
-  `teknisi_deskripsi` text CHARACTER SET utf8mb4 NOT NULL,
+  `teknisi_total_score` int(11) DEFAULT NULL,
+  `teknisi_total_responden` int(11) DEFAULT NULL,
+  `teknisi_deskripsi` text CHARACTER SET utf8mb4 DEFAULT NULL,
   `teknisi_foto` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `teknisi_sertifikat` text CHARACTER SET utf8mb4 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -351,7 +399,11 @@ CREATE TABLE `teknisi` (
 
 INSERT INTO `teknisi` (`teknisi_id`, `email`, `teknisi_nama`, `teknisi_nama_toko`, `teknisi_alamat`, `teknisi_lat`, `teknisi_lng`, `teknisi_hp`, `created_at`, `updated_at`, `teknisi_total_score`, `teknisi_total_responden`, `teknisi_deskripsi`, `teknisi_foto`, `teknisi_sertifikat`) VALUES
 (1, 'aduldwijaya@gmail.com', 'Adul Dwijaya', '', 'Jalan Gapura', '1', '1', '081275753271', '2021-10-24 03:06:30', '2021-06-08 21:49:43', 60, 14, 'Yo servis disini gratis pisang', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Adul Dwijaya_dummy2.jpg'),
-(2, 'ryan@gmail.com', 'Ryan Andropal', '', 'Jalan Gapura', '1', '1', '081275753271', '2021-10-24 03:06:13', '2021-07-07 19:27:28', 50, 14, 'Yo servis disini gratis pisang', 'Ryan Andropal_dummy1.jpg', 'Ryan Andropal_dummy2.jpg');
+(2, 'ryan@gmail.com', 'Ryan Andropal', '', 'Jalan Gapura', '1', '1', '081275753271', '2021-10-24 03:06:13', '2021-07-07 19:27:28', 50, 14, 'Yo servis disini gratis pisang', 'Ryan Andropal_dummy1.jpg', 'Ryan Andropal_dummy2.jpg'),
+(4, 'test@gmail.com', 'test', 'Toko I', 'PKU', '0.00', '0.00', NULL, '2021-11-02 18:46:23', '2021-11-02 18:46:23', NULL, NULL, 'Deskripsi toko I', NULL, NULL),
+(5, 'test2@gmail.com', 'test2', 'test2', 'test2', '0.0', '0.0', NULL, '2021-11-02 19:01:46', '2021-11-02 19:01:46', NULL, NULL, 'test2', NULL, NULL),
+(6, 'yaya@gmail.com', 'yaya', 'yaya', 'yaya', '0.0', '0.0', NULL, '2021-11-03 09:21:44', '2021-11-03 09:21:44', NULL, NULL, 'yaya', NULL, NULL),
+(7, 'haha@gmail.com', 'haha', 'haha', 'haha', '0.0', '0.0', NULL, '2021-11-03 09:22:52', '2021-11-03 09:22:52', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -365,6 +417,21 @@ CREATE TABLE `teknisi_kerusakan_jenis_hp` (
   `teknisi_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `teknisi_kerusakan_jenis_hp`
+--
+
+INSERT INTO `teknisi_kerusakan_jenis_hp` (`id`, `deskripsi`, `teknisi_id`) VALUES
+(1, 'deskripsi', 1),
+(11, 'deskripsi', 1),
+(12, 'deskripsi', 1),
+(13, 'deskripsi', 1),
+(14, 'deskripsi', 1),
+(15, 'deskripsi', 1),
+(16, 'deskripsi', 1),
+(17, '[gsfgsfg]', 1),
+(18, 'Testing', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -377,7 +444,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `akses_id` int(11) NOT NULL,
+  `akses_id` int(11) DEFAULT NULL,
   `level` enum('teknisi','pelanggan','admin') NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -393,7 +460,11 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ak
 (2, 'ujanga', 'uas@gmal.com', NULL, '$2y$10$vXTV64Vz9eo6NhdbkzUOW..3BCkySY0XH4kO3LjQtPumb5cHm5faq', 4, 'pelanggan', NULL, NULL, NULL),
 (3, 'Adul Dwijaya', 'aduldwijaya@gmail.com', NULL, '$2y$10$UxWFeU7AVFG/CICeLIs6ceNkSs4ntuOHraR0mQgX6Utr3TVWsKWbe', 1, 'teknisi', NULL, NULL, NULL),
 (4, 'Ryan Andropal', 'adulryan@gmail.com', NULL, '$2y$10$SSUCBHyRyVNmYpio0ncWyOlJqq7CpxUo2O7./zVcZac...', 2, 'teknisi', NULL, NULL, NULL),
-(6, 'a', 'a@gmail.com', NULL, 'bd905b54b717094932c93e23cd117b52de2e36b2', 1, 'pelanggan', NULL, NULL, NULL);
+(6, 'a', 'a@gmail.com', NULL, 'bd905b54b717094932c93e23cd117b52de2e36b2', 1, 'pelanggan', NULL, NULL, NULL),
+(8, 'test', 'test@gmail.com', NULL, '$2y$10$OcqeZH6oZJuOH7gRNKkZ9OpYdFwoT0HPxq.gdNq55iYReccF3xzia', NULL, 'teknisi', NULL, '2021-11-02 18:46:23', '2021-11-02 18:46:23'),
+(9, 'test2', 'test2@gmail.com', NULL, '$2y$10$/thIvm5fZ8lXTaYPGTafHOcNQRUaY9OJHS04jyG4.c1L9Hpd3GleO', NULL, 'teknisi', NULL, '2021-11-02 19:01:46', '2021-11-02 19:01:46'),
+(10, 'yaya', 'yaya@gmail.com', NULL, '$2y$10$LOuexfu1BjnO2O0eKdUh2eoNXMo/7g54qUIdY8tRfSnRhz3GJ9GK6', NULL, 'teknisi', NULL, '2021-11-03 09:21:44', '2021-11-03 09:21:44'),
+(11, 'haha', 'haha@gmail.com', NULL, '$2y$10$rl4hf2lcErZgEt/MKlnMM.KGur0zG.t7bheHzpIZh4PXPx1b96Mpy', NULL, 'teknisi', NULL, '2021-11-03 09:22:52', '2021-11-03 09:22:52');
 
 --
 -- Indexes for dumped tables
@@ -412,9 +483,15 @@ ALTER TABLE `beli`
   ADD PRIMARY KEY (`beli_id`);
 
 --
--- Indexes for table `detail_teknisi_kerusakan_jenis_hp`
+-- Indexes for table `detail_teknisi_jenis_hp`
 --
-ALTER TABLE `detail_teknisi_kerusakan_jenis_hp`
+ALTER TABLE `detail_teknisi_jenis_hp`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `detail_teknisi_jenis_kerusakan_hp`
+--
+ALTER TABLE `detail_teknisi_jenis_kerusakan_hp`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -531,10 +608,16 @@ ALTER TABLE `beli`
   MODIFY `beli_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `detail_teknisi_kerusakan_jenis_hp`
+-- AUTO_INCREMENT for table `detail_teknisi_jenis_hp`
 --
-ALTER TABLE `detail_teknisi_kerusakan_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `detail_teknisi_jenis_hp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `detail_teknisi_jenis_kerusakan_hp`
+--
+ALTER TABLE `detail_teknisi_jenis_kerusakan_hp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -552,13 +635,13 @@ ALTER TABLE `foto_jual_produk`
 -- AUTO_INCREMENT for table `jenis_hp`
 --
 ALTER TABLE `jenis_hp`
-  MODIFY `jenis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `jenis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `jenis_kerusakan_hp`
 --
 ALTER TABLE `jenis_kerusakan_hp`
-  MODIFY `id_jenis_kerusakan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jenis_kerusakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jual`
@@ -612,19 +695,19 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `teknisi_kerusakan_jenis_hp`
 --
 ALTER TABLE `teknisi_kerusakan_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
