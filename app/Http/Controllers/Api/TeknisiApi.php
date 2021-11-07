@@ -41,18 +41,13 @@ class TeknisiApi extends Controller
     {
         $location = DB::table('teknisi')
             ->select(
-                'teknisi.*', 'jenis_hp.*', 'jenis_kerusakan_hp.*',
+                'teknisi.*',
                 DB::raw(sprintf(
                     '(6371 * acos(cos(radians(%1$.7f)) * cos(radians(teknisi.teknisi_lat)) * cos(radians(teknisi.teknisi_lng) - radians(%2$.7f)) + sin(radians(%1$.7f)) * sin(radians(teknisi.teknisi_lat)))) AS distance',
                     $latitude,
                     $longitude
                 ))
             )
-            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
-            ->join('detail_teknisi_jenis_hp', 'detail_teknisi_jenis_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
-            ->join('detail_teknisi_jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
-            ->join('jenis_hp', 'detail_teknisi_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
-            ->join('jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.jenis_kerusakan_hp_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
             ->having('distance', '<', 50)
             ->orderBy('distance', 'asc')
             ->get();

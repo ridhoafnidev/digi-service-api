@@ -41,29 +41,29 @@ class AuthApi extends Controller
             $pw = Hash::check($request->password, $user->password);
             if ($pw)
             {
-                 return response()->json([
-                            'code' => 200,
-                            'result' => $data,
-                            'message' => "SUCCESS"
-                        ], 200);
+                return response()->json([
+                    'code' => 200,
+                    'result' => $data,
+                    'message' => "SUCCESS"
+                ], 200);
             }
             else
             {
-                  return response()->json([
-                            'code' => 422,
-                            'result' => "",
-                            'message' => "Password salah"
-                        ], 422);
-                }
+                return response()->json([
+                    'code' => 422,
+                    'result' => "",
+                    'message' => "Password salah"
+                ], 422);
+            }
         }
         else
         {
 
             return response()->json([
-                            'code' => 404,
-                            'result' => "",
-                            'message' => "Data tidak ditemukan"
-                        ], 404);
+                'code' => 404,
+                'result' => "",
+                'message' => "Data tidak ditemukan"
+            ], 404);
         }
     }
 }
