@@ -48,7 +48,6 @@ class TeknisiApi extends Controller
                     $longitude
                 ))
             )
-            ->having('distance', '<', 50)
             ->orderBy('distance', 'asc')
             ->get();
 
