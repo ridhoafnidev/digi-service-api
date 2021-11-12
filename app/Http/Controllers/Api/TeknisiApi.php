@@ -340,4 +340,45 @@ class TeknisiApi extends Controller
 
     }
 
+    public function get_keahlian_teknisi_by($teknisi_id)
+    {
+        $jenisKerusakanSearch = DB::table('detail_teknisi_jenis_kerusakan_hp')
+            ->select('detail_teknisi_jenis_kerusakan_hp.*', 'teknisi.teknisi_nama', 'jenis_kerusakan_hp.nama_kerusakan')
+            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.id', '=', 'detail_teknisi_jenis_kerusakan_hp.teknisi_kerusakan_jenis_hp_id')
+            ->join('teknisi', 'teknisi.teknisi_id', '=', 'teknisi_kerusakan_jenis_hp.teknisi_id')
+            ->join('jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.jenis_kerusakan_hp_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
+            ->where('teknisi_kerusakan_jenis_hp.teknisi_id', '=', $teknisi_id)
+            ->groupBy('detail_teknisi_jenis_kerusakan_hp.jenis_kerusakan_hp_id')
+            ->orderBy('jenis_kerusakan_hp.nama_kerusakan', 'ASC')
+            ->get();
+
+        $jenisHpSearch = DB::table('detail_teknisi_jenis_hp')
+            ->select( 'jenis_hp.*')
+            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.id', '=', 'detail_teknisi_jenis_hp.teknisi_kerusakan_jenis_hp_id')
+            ->join('jenis_hp', 'detail_teknisi_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
+            ->where('teknisi_kerusakan_jenis_hp.teknisi_id', '=', $teknisi_id)
+            ->groupBy('detail_teknisi_jenis_hp.jenis_hp_id')
+            ->orderBy('jenis_hp.jenis_nama', 'ASC')
+            ->get();
+
+        if (sizeof($jenisKerusakanSearch) >= 0 && sizeof($jenisHpSearch) >= 0) {
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Data berhasil diambil!',
+                'result' => [
+                    'jenis_kerusakan' => $jenisKerusakanSearch,
+                    'jenis_hp' => $jenisHpSearch
+                ]
+            ], 200);
+        }else{
+            return response()->json([
+                'code' => 400,
+                'status' => "SUCCESS",
+                'message' => 'Data gagal diambil!',
+                'result' => "",
+            ], 400);
+        }
+    }
+
 }

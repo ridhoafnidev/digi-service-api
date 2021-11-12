@@ -46,13 +46,15 @@ Route::put('/jenis-hp-delete/{id}', 'Api\JenisHpApi@delete_jenis_hp');
 
 // Jenis Kerusakan
 Route::get('/jenis-kerusakan-all', 'Api\JenisKerusakanApi@jenis_kerusakan_all');
-Route::get('/jenis-kerusakan-by/{id}', 'Api\JenisKerusakanApi@jenis_kerusakan_by');
+Route::get('/jenis-kerusakan-by/{referance}/{value}', 'Api\JenisKerusakanApi@jenis_kerusakan_by');
 Route::get('/jenis-kerusakan-one/{id}', 'Api\JenisKerusakanApi@jenis_kerusakan_one_by');
 Route::post('/jenis-kerusakan-insert', 'Api\JenisKerusakanApi@insert_jenis_kerusakan');
 Route::put('/jenis-kerusakan-update/{id}', 'Api\JenisKerusakanApi@update_jenis_kerusakan');
 
 
 Route::post('/insert-teknisi-jenis-hp-keahlian', 'Api\TeknisiApi@insert_teknisi_jenis_hp_keahlian');
+Route::get('/keahlian-teknisi-by/{teknisi_id}', 'Api\TeknisiApi@get_keahlian_teknisi_by');
+Route::get('/jenis-hp-by/{teknisi_id}', 'Api\TeknisiApi@get_jenis_hp_by');
 
 
 //Login
