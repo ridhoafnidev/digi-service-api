@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2021 at 04:02 PM
+-- Generation Time: Nov 12, 2021 at 01:54 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -399,11 +399,11 @@ CREATE TABLE `teknisi` (
 
 INSERT INTO `teknisi` (`teknisi_id`, `email`, `teknisi_nama`, `teknisi_nama_toko`, `teknisi_alamat`, `teknisi_lat`, `teknisi_lng`, `teknisi_hp`, `created_at`, `updated_at`, `teknisi_total_score`, `teknisi_total_responden`, `teknisi_deskripsi`, `teknisi_foto`, `teknisi_sertifikat`) VALUES
 (1, 'aduldwijaya@gmail.com', 'Adul Dwijaya', '', 'Jalan Gapura', '1', '1', '081275753271', '2021-10-24 03:06:30', '2021-06-08 21:49:43', 60, 14, 'Yo servis disini gratis pisang', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Adul Dwijaya_dummy2.jpg'),
-(2, 'ryan@gmail.com', 'Ryan Andropal', '', 'Jalan Gapura', '1', '1', '081275753271', '2021-10-24 03:06:13', '2021-07-07 19:27:28', 50, 14, 'Yo servis disini gratis pisang', 'Ryan Andropal_dummy1.jpg', 'Ryan Andropal_dummy2.jpg'),
-(4, 'test@gmail.com', 'test', 'Toko I', 'PKU', '0.00', '0.00', NULL, '2021-11-02 18:46:23', '2021-11-02 18:46:23', NULL, NULL, 'Deskripsi toko I', NULL, NULL),
-(5, 'test2@gmail.com', 'test2', 'test2', 'test2', '0.0', '0.0', NULL, '2021-11-02 19:01:46', '2021-11-02 19:01:46', NULL, NULL, 'test2', NULL, NULL),
-(6, 'yaya@gmail.com', 'yaya', 'yaya', 'yaya', '0.0', '0.0', NULL, '2021-11-03 09:21:44', '2021-11-03 09:21:44', NULL, NULL, 'yaya', NULL, NULL),
-(7, 'haha@gmail.com', 'haha', 'haha', 'haha', '0.0', '0.0', NULL, '2021-11-03 09:22:52', '2021-11-03 09:22:52', NULL, NULL, NULL, NULL, NULL);
+(2, 'ryan@gmail.com', 'Ryan Andropal', 'Jaya Hp', 'Jalan Gapura', '1', '1', '081275753271', '2021-11-12 00:18:53', '2021-07-07 19:27:28', 50, 14, 'Yo servis disini gratis pisang', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
+(4, 'test@gmail.com', 'test', 'Toko I', 'PKU', '0.00', '0.00', '081275753271', '2021-11-06 22:35:17', '2021-11-02 18:46:23', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
+(5, 'test2@gmail.com', 'test2', 'test2', 'test2', '0.0', '0.0', '081275753271', '2021-11-06 22:35:18', '2021-11-02 19:01:46', 50, 14, 'test2', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
+(6, 'yaya@gmail.com', 'yaya', 'yaya', 'yaya', '0.0', '0.0', '081275753271', '2021-11-06 22:35:20', '2021-11-03 09:21:44', 50, 14, 'yaya', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
+(7, 'haha@gmail.com', 'haha', 'haha', 'haha', '0.0', '0.0', '081275753271', '2021-11-06 22:35:21', '2021-11-03 09:22:52', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg');
 
 -- --------------------------------------------------------
 
@@ -422,15 +422,15 @@ CREATE TABLE `teknisi_kerusakan_jenis_hp` (
 --
 
 INSERT INTO `teknisi_kerusakan_jenis_hp` (`id`, `deskripsi`, `teknisi_id`) VALUES
-(1, 'deskripsi', 1),
-(11, 'deskripsi', 1),
-(12, 'deskripsi', 1),
-(13, 'deskripsi', 1),
-(14, 'deskripsi', 1),
-(15, 'deskripsi', 1),
-(16, 'deskripsi', 1),
-(17, '[gsfgsfg]', 1),
-(18, 'Testing', 1);
+(1, 'deskripsi', 2),
+(11, 'deskripsi', 2),
+(12, 'deskripsi', 2),
+(13, 'deskripsi', 2),
+(14, 'deskripsi', 2),
+(15, 'deskripsi', 2),
+(16, 'deskripsi', 2),
+(17, '[gsfgsfg]', 2),
+(18, 'Testing', 2);
 
 -- --------------------------------------------------------
 
@@ -456,7 +456,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `akses_id`, `level`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'ryan', 'ryan@gmail.com', NULL, '$2y$10$VAdQGEvVfX//P3xLr2dmVezNCdHjeDFoNmecuFth2ML5/s.rJdSbW', 0, 'teknisi', NULL, '2021-04-09 05:11:01', '2021-04-09 05:11:01'),
+(1, 'ryan', 'ryan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'teknisi', NULL, '2021-04-09 05:11:01', '2021-04-09 05:11:01'),
 (2, 'ujanga', 'uas@gmal.com', NULL, '$2y$10$vXTV64Vz9eo6NhdbkzUOW..3BCkySY0XH4kO3LjQtPumb5cHm5faq', 4, 'pelanggan', NULL, NULL, NULL),
 (3, 'Adul Dwijaya', 'aduldwijaya@gmail.com', NULL, '$2y$10$UxWFeU7AVFG/CICeLIs6ceNkSs4ntuOHraR0mQgX6Utr3TVWsKWbe', 1, 'teknisi', NULL, NULL, NULL),
 (4, 'Ryan Andropal', 'adulryan@gmail.com', NULL, '$2y$10$SSUCBHyRyVNmYpio0ncWyOlJqq7CpxUo2O7./zVcZac...', 2, 'teknisi', NULL, NULL, NULL),
