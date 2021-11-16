@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Teknisi;
 use App\TeknisiKerusakanJenisHp;
 use App\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -52,9 +53,9 @@ class TeknisiApi extends Controller
             ->get();
 
         if ($location != null || $location != '') {
-            echo json_encode(array('kode' => 200, 'hasil' => $location));
+            echo json_encode(array('code' => 200, 'result' => $location));
         } else {
-            echo json_encode(array('kode' => 404, 'hasil' => $location));
+            echo json_encode(array('code' => 404, 'result' => $location));
         }
     }
 
@@ -241,9 +242,9 @@ class TeknisiApi extends Controller
         }
     }
 
+
     public function insert_teknisi_jenis_hp_keahlian()
     {
-        // TODO reference TPA API
         $rawData = json_decode(file_get_contents("php://input"), true);
         $deskripsi = $rawData['deskripsi'];
         $teknisi_id = $rawData['teknisi_id'];
@@ -258,8 +259,9 @@ class TeknisiApi extends Controller
         for($size = 0; $size < sizeof($dataJenisHp); $size++){
             $detailTeknisiJenisHp = DB::table('detail_teknisi_jenis_hp')->insert(
             [
-                'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
-                'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id']
+                'teknisi_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
+                'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id'],
+                'teknisi_id' => $teknisi_id
             ]);
         }
 
@@ -268,7 +270,8 @@ class TeknisiApi extends Controller
             $detailTeknisiJenisKerusakanHp = DB::table('detail_teknisi_jenis_kerusakan_hp')->insert(
                 [
                     'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
-                    'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id']
+                    'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id'],
+                    'teknisi_id' => $teknisi_id
                 ]
             );
         }
@@ -294,25 +297,95 @@ class TeknisiApi extends Controller
 
     }
 
-    public function update_teknisi($id,Request $request){
-        $teknisi = Teknisi::find($id);
-        $teknisi->email = $request->email;
-        $teknisi->teknisi_nama = $request->teknisi_nama;
-        $teknisi->teknisi_nama_toko = $request->teknisi_nama_toko;
-        $teknisi->teknisi_alamat = $request->teknisi_alamat;
-        $teknisi->teknisi_lat = $request->teknisi_lat;
-        $teknisi->teknisi_lng = $request->teknisi_lng;
-        $teknisi->teknisi_hp = $request->teknisi_hp;
-        $teknisi->teknisi_total_score = $request->teknisi_total_score;
-        $teknisi->teknisi_total_responden = $request->teknisi_total_responden;
-        $teknisi->teknisi_deskripsi = $request->teknisi_deskripsi;
-        $teknisi->save();
-        if($teknisi){
-            echo json_encode(array('kode' => 200, 'status' => "Berhasil"));
-        }else{
-            echo json_encode(array('kode' => 404, 'status' => "Gagal"));
+    public function update_teknisi($id){
+
+        $rawData = json_decode(file_get_contents("php://input"), true);
+
+        $userRaw = $rawData['user'];
+        $teknisiRaw = $rawData['teknisi'];
+        $dataJenisHp = $rawData['jenis_hp'];
+        $dataJenisKerusakanHp = $rawData['jenis_kerusakan_hp'];
+
+        try {
+            $user = User::find($userRaw['id']);
+            $user->name = $userRaw['nama'];
+            $user->save();
+
+            if ($user){
+                $teknisi = Teknisi::find($teknisiRaw['teknisi_id']);
+
+                $teknisi->email = $user['email'];
+                $teknisi->teknisi_hp = $user['no_hp'];
+                $teknisi->teknisi_nama = $userRaw['nama'];
+                $teknisi->teknisi_nama_toko = $teknisiRaw['nama_toko'];
+                $teknisi->teknisi_alamat =$teknisiRaw['teknisi_alamat'];
+                $teknisi->teknisi_deskripsi = $teknisiRaw['deskripsi'];
+                //$teknisi->teknisi_lat = $user['lat'];
+                //$teknisi->teknisi_lng = $user['lng'];
+                $teknisi->save();
+
+                DB::table('detail_teknisi_jenis_hp')
+                    ->where('teknisi_id', '=', $teknisiRaw['teknisi_id'])
+                    ->delete();
+
+                DB::table('detail_teknisi_jenis_kerusakan_hp')
+                    ->where('teknisi_id', '=', $teknisiRaw['teknisi_id'])
+                    ->delete();
+
+                for($size = 0; $size < sizeof($dataJenisHp); $size++){
+                    $detailTeknisiJenisHp = DB::table('detail_teknisi_jenis_hp')->insert(
+                        [
+                            'teknisi_jenis_hp_id' => $dataJenisHp[$size]['id'],
+                            'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id'],
+                            'teknisi_id' => $teknisiRaw['teknisi_id']
+                        ]);
+                }
+
+
+                for($size = 0; $size < sizeof($dataJenisKerusakanHp); $size++){
+                    $detailTeknisiJenisKerusakanHp = DB::table('detail_teknisi_jenis_kerusakan_hp')->insert(
+                        [
+                            'teknisi_kerusakan_jenis_hp_id' => $dataJenisKerusakanHp[$size]['id'],
+                            'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id'],
+                            'teknisi_id' =>$teknisiRaw['teknisi_id']
+                        ]
+                    );
+                }
+
+//                for($size = 0; $size < sizeof($dataJenisHp); $size++){
+//                    DB::table('detail_teknisi_jenis_hp')
+//                        ->where('id', '=', $dataJenisHp[$size]['id'])
+//                        ->update([
+//                            'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id']
+//                        ]);
+//                }
+//
+//                for($size = 0; $size < sizeof($dataJenisKerusakanHp); $size++){
+//                    DB::table('detail_teknisi_jenis_kerusakan_hp')
+//                        ->where('id', '=', $dataJenisKerusakanHp[$size]['id'])
+//                        ->update([
+//                            'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id']
+//                        ]);
+//                }
+
+                return response()->json([
+                    'code' => 200,
+                    'status' => "SUCCESS",
+                    'message' => 'Berhasil Diupdate!',
+                    'result' => "",
+                ], 200);
+            }
+        }
+        catch (QueryException $exception) {
+            return response()->json([
+                'code' => 400,
+                'status' => "FAILED",
+                'message' => $exception->getMessage(),
+                'result' => "",
+            ], 400);
         }
     }
+
 
     public function delete_teknisi($id){
         $teknisi = DB::table('teknisi')->where('teknisi_id', $id)->delete();
@@ -353,10 +426,10 @@ class TeknisiApi extends Controller
             ->get();
 
         $jenisHpSearch = DB::table('detail_teknisi_jenis_hp')
-            ->select( 'jenis_hp.*')
-            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.id', '=', 'detail_teknisi_jenis_hp.teknisi_kerusakan_jenis_hp_id')
+            ->select( 'jenis_hp.*', 'detail_teknisi_jenis_hp.*')
+            ->join('teknisi_jenis_hp', 'teknisi_jenis_hp.id', '=', 'detail_teknisi_jenis_hp.teknisi_jenis_hp_id')
             ->join('jenis_hp', 'detail_teknisi_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
-            ->where('teknisi_kerusakan_jenis_hp.teknisi_id', '=', $teknisi_id)
+            ->where('teknisi_jenis_hp.teknisi_id', '=', $teknisi_id)
             ->groupBy('detail_teknisi_jenis_hp.jenis_hp_id')
             ->orderBy('jenis_hp.jenis_nama', 'ASC')
             ->get();
@@ -379,6 +452,59 @@ class TeknisiApi extends Controller
                 'result' => "",
             ], 400);
         }
+    }
+
+    public function update_user_teknisi()
+    {
+        // TODO reference TPA API
+        $rawData = json_decode(file_get_contents("php://input"), true);
+        $deskripsi = $rawData['deskripsi'];
+        $teknisi_id = $rawData['teknisi_id'];
+        $dataJenisHp = $rawData['jenis_hp'];
+        $dataJenisKerusakanHp = $rawData['jenis_kerusakan_hp'];
+
+        $teknisiJenisKerusakanHp = new TeknisiKerusakanJenisHp();
+        $teknisiJenisKerusakanHp->deskripsi = $deskripsi;
+        $teknisiJenisKerusakanHp->teknisi_id = $teknisi_id;
+        $teknisiJenisKerusakanHp->save();
+
+        for($size = 0; $size < sizeof($dataJenisHp); $size++){
+            $detailTeknisiJenisHp = DB::table('detail_teknisi_jenis_hp')->insert(
+                [
+                    'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
+                    'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id']
+                ]);
+        }
+
+
+        for($size = 0; $size < sizeof($dataJenisKerusakanHp); $size++){
+            $detailTeknisiJenisKerusakanHp = DB::table('detail_teknisi_jenis_kerusakan_hp')->insert(
+                [
+                    'teknisi_kerusakan_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
+                    'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id']
+                ]
+            );
+        }
+
+        if($teknisiJenisKerusakanHp && $detailTeknisiJenisHp && $detailTeknisiJenisKerusakanHp){
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Post Berhasil Disimpan!',
+                'result' => "",
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'code' => 400,
+                'status' => "FAILED",
+                'message' => 'Post Gagal Disimpan!',
+                'result' => "",
+            ], 400);
+        }
+
+
     }
 
 }
