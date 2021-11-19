@@ -56,6 +56,10 @@ Route::post('/insert-teknisi-jenis-hp-keahlian', 'Api\TeknisiApi@insert_teknisi_
 Route::get('/keahlian-teknisi-by/{teknisi_id}', 'Api\TeknisiApi@get_keahlian_teknisi_by');
 Route::get('/jenis-hp-by/{teknisi_id}', 'Api\TeknisiApi@get_jenis_hp_by');
 
+// Produk
+Route::get('/produk-all', 'Api\ProdukApi@produk_all');
+Route::post('/produk', 'Api\ProdukApi@produk_all');
+Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 
 //Login
 Route::post('/login', 'Api\AuthApi@login');
