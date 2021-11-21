@@ -59,25 +59,56 @@ class TeknisiApi extends Controller
         }
     }
 
-    public function search_by($jenis_hp, $jenis_kerusakan)
-    {
-        $teknisiSearch = DB::table('teknisi')
-            ->select('teknisi.*', 'jenis_hp.*', 'jenis_kerusakan_hp.*')
-            ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
-            ->join('detail_teknisi_kerusakan_jenis_hp', 'detail_teknisi_kerusakan_jenis_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
-            ->join('jenis_hp', 'detail_teknisi_kerusakan_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
-            ->join('jenis_kerusakan_hp', 'detail_teknisi_kerusakan_jenis_hp.jenis_kerusakan_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
-            ->where('detail_teknisi_kerusakan_jenis_hp.jenis_hp_id', '=', $jenis_hp)
-            ->where('detail_teknisi_kerusakan_jenis_hp.jenis_kerusakan_id', '=', $jenis_kerusakan)
-            ->orderBy('teknisi.teknisi_total_score', 'desc')
-            ->orderBy('teknisi.teknisi_total_responden', 'desc')
-            ->get();
+    public function search_by() {
 
-        if (sizeof($teknisiSearch) >= 0) {
-            echo json_encode(array('kode'=> 1,'result' => $teknisiSearch));
-        }else{
-            echo json_encode(array('kode'=> 2,'pesan' => 'Data tidak ditemukan'));
+        $rawData = json_decode(file_get_contents("php://input"), true);
+
+        $jenisHpRaw = $rawData['jenis_hp'];
+        $jenisKerusakanRaw = $rawData['jenis_kerusakan'];
+
+        try {
+            $teknisiSearch = DB::table('teknisi')
+                ->select('teknisi.*')
+                ->join('teknisi_kerusakan_jenis_hp', 'teknisi_kerusakan_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
+                ->join('detail_teknisi_jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.teknisi_kerusakan_jenis_hp_id', '=', 'teknisi_kerusakan_jenis_hp.id')
+                ->join('jenis_kerusakan_hp', 'detail_teknisi_jenis_kerusakan_hp.jenis_kerusakan_hp_id', '=', 'jenis_kerusakan_hp.id_jenis_kerusakan')
+                ->join('teknisi_jenis_hp', 'teknisi_jenis_hp.teknisi_id', '=', 'teknisi.teknisi_id')
+                ->join('detail_teknisi_jenis_hp', 'detail_teknisi_jenis_hp.teknisi_jenis_hp_id', '=', 'teknisi_jenis_hp.id')
+                ->join('jenis_hp', 'detail_teknisi_jenis_hp.jenis_hp_id', '=', 'jenis_hp.jenis_id')
+                ->whereIn('detail_teknisi_jenis_hp.jenis_hp_id', $jenisHpRaw)
+                ->orWhereIn('detail_teknisi_jenis_kerusakan_hp.jenis_kerusakan_hp_id', $jenisKerusakanRaw)
+                ->orderBy('teknisi.teknisi_total_score', 'asc')
+                ->orderBy('teknisi.teknisi_total_responden', 'asc')
+                ->groupBy('detail_teknisi_jenis_hp.teknisi_id', 'detail_teknisi_jenis_kerusakan_hp.teknisi_id')
+                ->get();
+
+            if (sizeof($teknisiSearch) >= 0) {
+                return response()->json([
+                    'code' => 200,
+                    'status' => "SUCCESS",
+                    'message' => 'Data berhasil diambil!',
+                    'result' => $teknisiSearch,
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'code' => 200,
+                    'status' => "SUCCESS",
+                    'message' => 'Data kosong!',
+                    'result' => $teknisiSearch,
+                ], 200);
+            }
+
         }
+        catch (QueryException $exception){
+            return response()->json([
+                'code' => 500,
+                'status' => "FAILED",
+                'message' => $exception->getMessage(),
+                'result' => "",
+            ], 500);
+        }
+
     }
 
     public function teknisi_by($reference,$value)
@@ -351,22 +382,6 @@ class TeknisiApi extends Controller
                         ]
                     );
                 }
-
-//                for($size = 0; $size < sizeof($dataJenisHp); $size++){
-//                    DB::table('detail_teknisi_jenis_hp')
-//                        ->where('id', '=', $dataJenisHp[$size]['id'])
-//                        ->update([
-//                            'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id']
-//                        ]);
-//                }
-//
-//                for($size = 0; $size < sizeof($dataJenisKerusakanHp); $size++){
-//                    DB::table('detail_teknisi_jenis_kerusakan_hp')
-//                        ->where('id', '=', $dataJenisKerusakanHp[$size]['id'])
-//                        ->update([
-//                            'jenis_kerusakan_hp_id' => $dataJenisKerusakanHp[$size]['kerusakan_jenis_hp_id']
-//                        ]);
-//                }
 
                 return response()->json([
                     'code' => 200,

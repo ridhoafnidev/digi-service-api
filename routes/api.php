@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Teknisi
 Route::get('/teknisi-all', 'Api\TeknisiApi@teknisi_all');
-Route::get('/teknisi-search-by/{jenis_hp}/{jenis_kerusakan}', 'Api\TeknisiApi@search_by');
+Route::post('/teknisi-search-by', 'Api\TeknisiApi@search_by');
 Route::get('/teknisi-find-nearby/{latitide}/{longitude}', 'Api\TeknisiApi@find_teknisi_nearby_location');
 Route::post('/teknisi-insert', 'Api\TeknisiApi@insert_teknisi');
 Route::post('/teknisi-update/{id}', 'Api\TeknisiApi@update_teknisi');
