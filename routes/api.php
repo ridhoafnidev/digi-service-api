@@ -53,14 +53,16 @@ Route::put('/jenis-kerusakan-update/{id}', 'Api\JenisKerusakanApi@update_jenis_k
 
 
 Route::post('/insert-teknisi-jenis-hp-keahlian', 'Api\TeknisiApi@insert_teknisi_jenis_hp_keahlian');
-Route::post('/insert-teknisi', 'Api\TeknisiApi@insert_teknisi');
 Route::get('/keahlian-teknisi-by/{teknisi_id}', 'Api\TeknisiApi@get_keahlian_teknisi_by');
 Route::get('/jenis-hp-by/{teknisi_id}', 'Api\TeknisiApi@get_jenis_hp_by');
 
 // Produk
 Route::get('/produk-all', 'Api\ProdukApi@produk_all');
-Route::post('/produk', 'Api\ProdukApi@insert_produk');
 Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
+
+// Service Handphone
+Route::get('/service-handphone', 'Api\ServiceHandphoneApi@service_handphone_all');
+Route::post('/service-handphone', 'Api\ServiceHandphoneApi@insert_service_handphone');
 
 //Login
 Route::post('/login', 'Api\AuthApi@login');
