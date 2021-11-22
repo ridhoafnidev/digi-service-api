@@ -35,9 +35,12 @@ class ServiceHandphoneApi extends Controller
         }
     }
 
-    public function service_handphone_all()
+    public function service_handphone_by_teknisi(Request $request)
     {
-        $service_handphone = DB::table("service_handphone")->get();
+        $service_handphone = DB::table("service_handphone")
+            ->where('teknisi_id', '=', $request->teknisi_id)
+            ->join('pelanggan', 'service_handphone.pelanggan_id', '=', 'pelanggan.pelanggan_id')
+            ->get();
         if ($service_handphone) {
             return response()->json([
                 'code' => 200,
