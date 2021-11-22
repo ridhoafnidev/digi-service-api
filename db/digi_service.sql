@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 16, 2021 at 01:13 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.3.29
+-- Host: localhost
+-- Generation Time: Nov 22, 2021 at 03:14 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -207,6 +207,7 @@ INSERT INTO `jenis_kerusakan_hp` (`id_jenis_kerusakan`, `nama_kerusakan`, `deskr
 
 CREATE TABLE `jual` (
   `jual_id` int(11) NOT NULL,
+  `path_photo` varchar(255) NOT NULL,
   `jual_tgl_penjualan` datetime NOT NULL DEFAULT current_timestamp(),
   `jual_status` enum('belum','sudah','booked') NOT NULL DEFAULT 'belum',
   `jual_harga` bigint(20) NOT NULL,
@@ -221,8 +222,9 @@ CREATE TABLE `jual` (
 -- Dumping data for table `jual`
 --
 
-INSERT INTO `jual` (`jual_id`, `jual_tgl_penjualan`, `jual_status`, `jual_harga`, `jual_deskripsi`, `jual_user_id`, `jual_tujuan`, `jual_judul`, `jual_jenis_hp`) VALUES
-(1, '2021-08-12 19:58:22', 'belum', 50000, 'mantap', 1, 'pelanggan', 'mantap', 1);
+INSERT INTO `jual` (`jual_id`, `path_photo`, `jual_tgl_penjualan`, `jual_status`, `jual_harga`, `jual_deskripsi`, `jual_user_id`, `jual_tujuan`, `jual_judul`, `jual_jenis_hp`) VALUES
+(1, 'https://www.jakmall.com/blog/content/images/2020/09/sssss.JPG', '2021-08-12 19:58:22', 'belum', 50000, 'Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau presentasi visual seperti font, tipografi, dan tata letak', 1, 'pelanggan', 'Hp Xiomi Redmo Note 9', 1),
+(2, 'https://www.jakmall.com/blog/content/images/2020/09/sssss.JPG', '2021-08-12 19:58:22', 'belum', 50000, 'Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau presentasi visual seperti font, tipografi, dan tata letak', 1, 'pelanggan', 'Hp Xiomi Redmo Note 9', 1);
 
 -- --------------------------------------------------------
 
@@ -389,7 +391,7 @@ CREATE TABLE `teknisi` (
 --
 
 INSERT INTO `teknisi` (`teknisi_id`, `email`, `teknisi_nama`, `teknisi_nama_toko`, `teknisi_alamat`, `teknisi_lat`, `teknisi_lng`, `teknisi_hp`, `created_at`, `updated_at`, `teknisi_total_score`, `teknisi_total_responden`, `teknisi_deskripsi`, `teknisi_foto`, `teknisi_sertifikat`) VALUES
-(1, 'ryan@gmail.com', 'Ryans', 'Jaya Ponsel', 'Pekanbaru', '1', '1', NULL, '2021-11-15 00:24:50', '2021-11-14 17:24:50', 60, 14, 'Yaya', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Adul Dwijaya_dummy2.jpg'),
+(1, 'ryan@gmail.com', 'Ryans', 'Jaya Ponsel', 'Pekanbaru', '1', '1', '08330101010', '2021-11-16 13:13:18', '2021-11-14 17:24:50', 60, 14, 'Yaya', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Adul Dwijaya_dummy2.jpg'),
 (2, 'ryan@gmail.com', 'Ryan Andropal', 'Jaya Hp', 'Jalan Gapura', '1', '1', '081275753271', '2021-11-12 00:18:53', '2021-07-07 19:27:28', 50, 14, 'Yo servis disini gratis pisang', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (4, 'test@gmail.com', 'test', 'Toko I', 'PKU', '0.00', '0.00', '081275753271', '2021-11-06 22:35:17', '2021-11-02 18:46:23', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (5, 'test2@gmail.com', 'test2', 'test2', 'test2', '0.0', '0.0', '081275753271', '2021-11-06 22:35:18', '2021-11-02 19:01:46', 50, 14, 'test2', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
@@ -465,7 +467,18 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ak
 (8, 'test', 'test@gmail.com', NULL, '$2y$10$OcqeZH6oZJuOH7gRNKkZ9OpYdFwoT0HPxq.gdNq55iYReccF3xzia', NULL, 'teknisi', NULL, '2021-11-02 18:46:23', '2021-11-02 18:46:23'),
 (9, 'test2', 'test2@gmail.com', NULL, '$2y$10$/thIvm5fZ8lXTaYPGTafHOcNQRUaY9OJHS04jyG4.c1L9Hpd3GleO', NULL, 'teknisi', NULL, '2021-11-02 19:01:46', '2021-11-02 19:01:46'),
 (10, 'yaya', 'yaya@gmail.com', NULL, '$2y$10$LOuexfu1BjnO2O0eKdUh2eoNXMo/7g54qUIdY8tRfSnRhz3GJ9GK6', NULL, 'teknisi', NULL, '2021-11-03 09:21:44', '2021-11-03 09:21:44'),
-(11, 'haha', 'haha@gmail.com', NULL, '$2y$10$rl4hf2lcErZgEt/MKlnMM.KGur0zG.t7bheHzpIZh4PXPx1b96Mpy', NULL, 'teknisi', NULL, '2021-11-03 09:22:52', '2021-11-03 09:22:52');
+(11, 'haha', 'haha@gmail.com', NULL, '$2y$10$rl4hf2lcErZgEt/MKlnMM.KGur0zG.t7bheHzpIZh4PXPx1b96Mpy', NULL, 'teknisi', NULL, '2021-11-03 09:22:52', '2021-11-03 09:22:52'),
+(12, 'Abdul', 'abdul@gmail.com', NULL, '$2y$10$s9XNc4NR7AAmqZvYIMjQieNvBbHvpy7o2hHPtcaAxQtfe5ttpGlwC', NULL, 'teknisi', NULL, '2021-11-19 07:48:01', '2021-11-19 07:48:01'),
+(13, 'Abdul fwefw', 'abduvvwefwl@gmail.com', NULL, '$2y$10$Fxh5RPvrVIc331eeEpqpzOzGorv6SL99T6ZO0d4LJkLEVkJbTHAju', NULL, 'teknisi', NULL, '2021-11-19 07:50:26', '2021-11-19 07:50:26'),
+(14, 'Abdul fwefw', 'newuser@gmail.com', NULL, '$2y$10$34ITzvVbPw8B0bedRmBmt.Ot4LGT25lO9IcrlOm5O1H0DiJk3mcdq', NULL, 'teknisi', NULL, '2021-11-19 07:51:35', '2021-11-19 07:51:35'),
+(15, 'Abdul fwefw', 'newuser1@gmail.com', NULL, '$2y$10$asNpeYqSAoNdbXW8/wXjr.LB6yYrPusGESPzkzIs/iKeuieQlpWgi', NULL, 'teknisi', NULL, '2021-11-19 07:53:40', '2021-11-19 07:53:40'),
+(16, 'Abdul fwefw', 'newuser2@gmail.com', NULL, '$2y$10$1eR7JdOUa2ZuWgay/QavoO5dWwi8/YT/0ARl.ez7RWq2kGIfU7PKu', NULL, 'teknisi', NULL, '2021-11-19 07:54:05', '2021-11-19 07:54:05'),
+(17, 'Abdul fwefw', 'newuser3@gmail.com', NULL, '$2y$10$6POQg7UlwXTdQGsl2tiUU.xKe86eyf14b/JfY43ZnlSwHDZgy7IZG', NULL, 'teknisi', NULL, '2021-11-19 08:00:04', '2021-11-19 08:00:04'),
+(18, 'Abdul fwefw', 'newuser4@gmail.com', NULL, '$2y$10$elwm6Cp7mm5/2kEAfnWc..SqmwRiK.nh7847aCPM2G4QQtXgEtm2y', NULL, 'teknisi', NULL, '2021-11-19 08:01:03', '2021-11-19 08:01:03'),
+(19, 'Abdul fwefw', 'newuser5@gmail.com', NULL, '$2y$10$8FxdckTfpmReW8Q5bSEgBexIQzKjJYHIcMazXjGO9T2LC5.8ogbpi', NULL, 'teknisi', NULL, '2021-11-19 08:10:10', '2021-11-19 08:10:10'),
+(20, 'Abdul fwefw', 'newuser6@gmail.com', NULL, '$2y$10$7eYAvZ1SBdxeweAQIqqyB.E2I570EDr3aY045V9goJ2wdPPWiHESO', NULL, 'teknisi', NULL, '2021-11-19 19:10:28', '2021-11-19 19:10:28'),
+(21, 'Abdul fwefw', 'newuser7@gmail.com', NULL, '$2y$10$v6QTRtI99U4yNmbrlVSkJO/BJuT3EoW55mKr.nEztbgBv0l.cknHW', NULL, 'teknisi', NULL, '2021-11-19 19:14:31', '2021-11-19 19:14:31'),
+(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40');
 
 --
 -- Indexes for dumped tables
@@ -654,7 +667,7 @@ ALTER TABLE `jenis_kerusakan_hp`
 -- AUTO_INCREMENT for table `jual`
 --
 ALTER TABLE `jual`
-  MODIFY `jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `jual_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `keahlian`
@@ -702,7 +715,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `teknisi_jenis_hp`
@@ -720,7 +733,7 @@ ALTER TABLE `teknisi_kerusakan_jenis_hp`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
