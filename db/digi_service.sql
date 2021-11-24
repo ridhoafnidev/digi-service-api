@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 22, 2021 at 03:14 PM
+-- Generation Time: Nov 24, 2021 at 05:47 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -295,7 +295,7 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`pelanggan_id`, `email`, `pelanggan_nama`, `pelanggan_hp`, `pelanggan_alamat`, `pelanggan_foto`, `pelanggan_date_created`, `pelanggan_date_updated`, `pelanggan_lat`, `pelanggan_lng`) VALUES
-(4, 'uas@gmal.com', 'ujanga', '1231231', 'JLaninaja', 'Jhon_dummy3.jpg', '2021-06-08 06:55:09', '2021-10-24 03:11:27', '2323131', '23232');
+(4, 'uas@gmal.com', 'ujanga', '1231231', 'JLaninaja', 'https://awsimages.detik.net.id/community/media/visual/2021/01/11/pria-nyamar-di-medsos-jadi-wanita-lalu-dia-peras-lelaki-yang-vcs-dok-istimewa-1_43.jpeg?w=700&q=90', '2021-06-08 06:55:09', '2021-11-23 01:10:49', '2323131', '23232');
 
 -- --------------------------------------------------------
 
