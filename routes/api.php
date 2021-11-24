@@ -61,8 +61,10 @@ Route::get('/produk-all', 'Api\ProdukApi@produk_all');
 Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 
 // Service Handphone
-Route::get('/service-handphone/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
+Route::get('/service-handphone-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
+Route::get('/service-handphone-by-id/{service_handphone_id}', 'Api\ServiceHandphoneApi@service_handphone_by_id');
 Route::post('/service-handphone', 'Api\ServiceHandphoneApi@insert_service_handphone');
+Route::put('/service-handphone-update/{service_handphone_id}', 'Api\ServiceHandphoneApi@update_service_handphone');
 
 //Login
 Route::post('/login', 'Api\AuthApi@login');

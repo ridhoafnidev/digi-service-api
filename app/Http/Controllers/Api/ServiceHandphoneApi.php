@@ -15,7 +15,8 @@ class ServiceHandphoneApi extends Controller
             'teknisi_id' => $request->teknisi_id,
             'jenis_hp' => $request->jenis_hp,
             'jenis_kerusakan' => $request->jenis_kerusakan,
-            'by_kurir' => $request->by_kurir
+            'by_kurir' => $request->by_kurir,
+            'status_service' => 'proses'
         ]);
 
         if ($insert_service_handphone) {
@@ -30,6 +31,31 @@ class ServiceHandphoneApi extends Controller
                 'code' => 400,
                 'status' => "FAILED",
                 'message' => 'Post Gagal Disimpan!',
+                'result' => "",
+            ], 400);
+        }
+    }
+
+    public function update_service_handphone(Request $request)
+    {
+        $update_service_handphone = DB::table("service_handphone")
+            ->where('service_handphone_id', '=', $request->service_handphone_id)
+            ->update([
+                'status_service' => $request->status_service
+            ]);
+
+        if ($update_service_handphone) {
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Update Berhasil Disimpan!',
+                'result' => "",
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 400,
+                'status' => "FAILED",
+                'message' => 'Update Gagal Disimpan!',
                 'result' => "",
             ], 400);
         }
@@ -55,4 +81,26 @@ class ServiceHandphoneApi extends Controller
             ], 404);
         }
     }
+
+    public function service_handphone_by_id(Request $request)
+    {
+        $service_handphone = DB::table("service_handphone")
+            ->where('service_handphone_id', '=', $request->service_handphone_id)
+            ->join('pelanggan', 'service_handphone.pelanggan_id', '=', 'pelanggan.pelanggan_id')
+            ->first();
+        if ($service_handphone) {
+            return response()->json([
+                'code' => 200,
+                'result' => $service_handphone,
+                'message' => "SUCCESS"
+            ], 200);
+        }else{
+            return response()->json([
+                'code' => 404,
+                'result' => "",
+                'message' => "FAILED"
+            ], 404);
+        }
+    }
+
 }
