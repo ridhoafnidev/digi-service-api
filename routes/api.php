@@ -63,7 +63,7 @@ Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 // Service Handphone
 Route::get('/service-handphone-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
 Route::get('/service-handphone-by-id/{service_handphone_id}', 'Api\ServiceHandphoneApi@service_handphone_by_id');
-Route::post('/service-handphone', 'Api\ServiceHandphoneApi@insert_service_handphone');
+Route::post('/service-handphone-insert', 'Api\ServiceHandphoneApi@insert_service_handphone');
 Route::put('/service-handphone-update/{service_handphone_id}', 'Api\ServiceHandphoneApi@update_service_handphone');
 
 //Login
