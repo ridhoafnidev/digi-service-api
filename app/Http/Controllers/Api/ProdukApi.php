@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Produk;
 use App\Teknisi;
 use App\TeknisiKerusakanJenisHp;
 use App\User;
@@ -59,7 +60,34 @@ class ProdukApi extends Controller
         }
     }
 
-    public function insert_produk(Request $request) {
+    public function produk_insert(Request $request) {
+        $jual = new Produk();
 
+        $foto_produk = $request->file("foto");
+
+        $jual->jual_harga = $request->jual_harga;
+        $jual->jual_deskripsi = $request->jual_deskripsi;
+        $jual->jual_user_id = $request->jual_user_id;
+        $jual->jual_judul = $request->jual_judul;
+        $jual->jual_jenis_hp = $request->jual_jenis_hp;
+        $jual->foto_produk = $request->foto->getClientOriginalName();
+        $jual->save();
+        $foto_produk->move(public_path('foto-produk'), $request->foto->getClientOriginalName());
+        if ($jual) {
+            return response()->json([
+                'code' => 200,
+                'status' => "Success",
+                'message' => 'Berhasil menyimpan!',
+                'result' => "",
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'code' => 400,
+                'status' => "Failed",
+                'message' => 'Gagal menyimpan!',
+                'result' => "",
+            ], 400);
+        }
     }
 }

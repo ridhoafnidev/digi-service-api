@@ -19,15 +19,16 @@ class AuthApi extends Controller
         {
             $data = DB::table('users')
                 ->join('teknisi', 'teknisi.email', '=', 'users.email')
-                ->select('users.*', 'teknisi.teknisi_id')
+                ->select('users.*', 'teknisi.teknisi_id', 'teknisi.teknisi_hp as hp', 'teknisi.teknisi_alamat as alamat', 'teknisi.teknisi_foto as foto', 'teknisi.teknisi_nama_toko as nama_toko', 'teknisi.teknisi_lat as lat', 'teknisi.teknisi_lng as lng', 'teknisi.teknisi_deskripsi as deskripsi')
                 ->where('users.email', $request->email)
                 ->first();
         }
         else if ($user->level == "pelanggan")
         {
+
             $data = DB::table('users')
                 ->join('pelanggan', 'pelanggan.email', '=', 'users.email')
-                ->select('users.*', 'pelanggan.pelanggan_id')
+                ->select('users.*', 'pelanggan.pelanggan_id', 'pelanggan.pelanggan_hp as hp', 'pelanggan.pelanggan_alamat as alamat', 'pelanggan.pelanggan_foto as foto', 'pelanggan.pelanggan_lat as lat', 'pelanggan.pelanggan_lng as lng')
                 ->where('users.email', $request->email)
                 ->first();
         }
