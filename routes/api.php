@@ -58,6 +58,7 @@ Route::get('/jenis-hp-by/{teknisi_id}', 'Api\TeknisiApi@get_jenis_hp_by');
 
 // Produk
 Route::get('/produk-all', 'Api\ProdukApi@produk_all');
+Route::post('/produk-insert', 'Api\ProdukApi@produk_insert');
 Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 
 // Service Handphone
