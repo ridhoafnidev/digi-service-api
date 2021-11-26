@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 24, 2021 at 05:47 PM
+-- Generation Time: Nov 26, 2021 at 01:59 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -295,7 +295,8 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`pelanggan_id`, `email`, `pelanggan_nama`, `pelanggan_hp`, `pelanggan_alamat`, `pelanggan_foto`, `pelanggan_date_created`, `pelanggan_date_updated`, `pelanggan_lat`, `pelanggan_lng`) VALUES
-(4, 'uas@gmal.com', 'ujanga', '1231231', 'JLaninaja', 'https://awsimages.detik.net.id/community/media/visual/2021/01/11/pria-nyamar-di-medsos-jadi-wanita-lalu-dia-peras-lelaki-yang-vcs-dok-istimewa-1_43.jpeg?w=700&q=90', '2021-06-08 06:55:09', '2021-11-23 01:10:49', '2323131', '23232');
+(4, 'abdul123@gmail.com', 'Abdul Hafiz Ramadan', 'Vivo', 'Bukit Datuk', 'https://img.lovepik.com/photo/50118/9025.jpg_wh860.jpg', '2021-11-25 01:56:17', '2021-11-25 13:41:34', '-', '-'),
+(6, 'pelanggan@gmail.com', 'Pelanggan', 'Vivo', 'Bumi', 'https://image.freepik.com/free-photo/smiling-asian-man-standing-with-hands-folded-concept-engineering-jobs_264197-8835.jpg', '2021-11-25 13:49:21', '2021-11-25 13:49:21', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -361,6 +362,39 @@ CREATE TABLE `review` (
   `nilai` double NOT NULL,
   `isi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service_handphone`
+--
+
+CREATE TABLE `service_handphone` (
+  `service_handphone_id` int(11) NOT NULL,
+  `pelanggan_id` int(11) NOT NULL,
+  `teknisi_id` int(11) NOT NULL,
+  `jenis_hp` varchar(255) NOT NULL,
+  `jenis_kerusakan` varchar(255) NOT NULL,
+  `by_kurir` tinyint(1) NOT NULL,
+  `status_service` enum('selesai','dibatalkan','proses','diterima','ditolak') NOT NULL DEFAULT 'proses',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `service_handphone`
+--
+
+INSERT INTO `service_handphone` (`service_handphone_id`, `pelanggan_id`, `teknisi_id`, `jenis_hp`, `jenis_kerusakan`, `by_kurir`, `status_service`, `created_at`, `updated_at`) VALUES
+(5, 4, 2, 'Vivo', 'lcd', 0, 'ditolak', '2021-11-22 09:05:14', '2021-11-22 09:05:14'),
+(6, 4, 2, 'Vivo', 'Lemot', 1, 'diterima', '2021-11-22 09:05:48', '2021-11-22 09:05:48'),
+(7, 4, 6, 'Vivo', 'battery', 0, 'diterima', '2021-11-22 09:07:54', '2021-11-22 09:07:54'),
+(8, 4, 4, 'Vivo', 'loop', 0, 'diterima', '2021-11-22 09:11:00', '2021-11-22 09:11:00'),
+(9, 4, 5, 'Lenovo', 'lcd', 0, 'proses', '2021-11-22 09:13:03', '2021-11-22 09:13:03'),
+(10, 25, 1, 'Lemovo', '1234', 0, 'proses', '2021-11-25 14:41:44', '2021-11-25 14:41:44'),
+(11, 25, 1, 'Lemo', 'admin', 0, 'proses', '2021-11-25 14:43:40', '2021-11-25 14:43:40'),
+(12, 25, 2, 'andro', 'afew', 0, 'proses', '2021-11-25 14:44:48', '2021-11-25 14:44:48'),
+(13, 25, 2, 'ffwefw', 'fwfw', 0, 'proses', '2021-11-25 14:56:16', '2021-11-25 14:56:16');
 
 -- --------------------------------------------------------
 
@@ -461,7 +495,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `akses_id`, `level`, `remember_token`, `created_at`, `updated_at`) VALUES
 (2, 'Ryans', 'ryan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'teknisi', NULL, '2021-04-09 05:11:01', '2021-11-13 09:00:55'),
-(3, 'Adul Dwijaya', 'aduldwijaya@gmail.com', NULL, '$2y$10$UxWFeU7AVFG/CICeLIs6ceNkSs4ntuOHraR0mQgX6Utr3TVWsKWbe', 1, 'teknisi', NULL, NULL, NULL),
+(3, 'Adul Dwijaya', 'aduldwijaya@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 1, 'teknisi', NULL, NULL, NULL),
 (4, 'Ryan Andropal', 'adulryan@gmail.com', NULL, '$2y$10$SSUCBHyRyVNmYpio0ncWyOlJqq7CpxUo2O7./zVcZac...', 2, 'teknisi', NULL, NULL, NULL),
 (6, 'a', 'a@gmail.com', NULL, 'bd905b54b717094932c93e23cd117b52de2e36b2', 1, 'pelanggan', NULL, NULL, NULL),
 (8, 'test', 'test@gmail.com', NULL, '$2y$10$OcqeZH6oZJuOH7gRNKkZ9OpYdFwoT0HPxq.gdNq55iYReccF3xzia', NULL, 'teknisi', NULL, '2021-11-02 18:46:23', '2021-11-02 18:46:23'),
@@ -478,7 +512,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ak
 (19, 'Abdul fwefw', 'newuser5@gmail.com', NULL, '$2y$10$8FxdckTfpmReW8Q5bSEgBexIQzKjJYHIcMazXjGO9T2LC5.8ogbpi', NULL, 'teknisi', NULL, '2021-11-19 08:10:10', '2021-11-19 08:10:10'),
 (20, 'Abdul fwefw', 'newuser6@gmail.com', NULL, '$2y$10$7eYAvZ1SBdxeweAQIqqyB.E2I570EDr3aY045V9goJ2wdPPWiHESO', NULL, 'teknisi', NULL, '2021-11-19 19:10:28', '2021-11-19 19:10:28'),
 (21, 'Abdul fwefw', 'newuser7@gmail.com', NULL, '$2y$10$v6QTRtI99U4yNmbrlVSkJO/BJuT3EoW55mKr.nEztbgBv0l.cknHW', NULL, 'teknisi', NULL, '2021-11-19 19:14:31', '2021-11-19 19:14:31'),
-(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40');
+(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40'),
+(24, 'Abdul Hafiz Ramadan', 'abdul123@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-11-25 01:58:26', '2021-11-25 01:58:26'),
+(25, 'pelanggan', 'pelanggan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-04-09 05:11:01', '2021-11-13 09:00:55');
 
 --
 -- Indexes for dumped tables
@@ -587,6 +623,12 @@ ALTER TABLE `review`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `service_handphone`
+--
+ALTER TABLE `service_handphone`
+  ADD PRIMARY KEY (`service_handphone_id`);
+
+--
 -- Indexes for table `teknisi`
 --
 ALTER TABLE `teknisi`
@@ -685,7 +727,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `pelanggan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pelanggan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pesan`
@@ -712,6 +754,12 @@ ALTER TABLE `review`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `service_handphone`
+--
+ALTER TABLE `service_handphone`
+  MODIFY `service_handphone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
@@ -733,7 +781,7 @@ ALTER TABLE `teknisi_kerusakan_jenis_hp`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
