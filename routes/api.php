@@ -30,9 +30,9 @@ Route::get('/teknisi-one/{reference}/{value}', 'Api\TeknisiApi@teknisi_one_by');
 
 //Pelanggan
 Route::get('/pelanggan-all', 'Api\PelangganApi@pelanggan_all');
-Route::get('/pelanggan-insert', 'Api\PelangganApi@insert_pelanggan');
-Route::get('/pelanggan-update/{id}', 'Api\PelangganApi@update_pelanggan');
-Route::get('/pelanggan-delete/{id}', 'Api\PelangganApi@delete_pelanggan');
+Route::post('/pelanggan-insert', 'Api\PelangganApi@insert_pelanggan');
+Route::post('/pelanggan-update/{id}', 'Api\PelangganApi@update_pelanggan');
+Route::delete('/pelanggan-delete/{id}', 'Api\PelangganApi@delete_pelanggan');
 Route::get('/pelanggan-by/{reference}/{value}', 'Api\PelangganApi@pelanggan_by');
 Route::get('/pelanggan-one/{reference}/{value}', 'Api\PelangganApi@pelanggan_one_by');
 
