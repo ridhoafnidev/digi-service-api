@@ -58,13 +58,21 @@ Route::get('/jenis-hp-by/{teknisi_id}', 'Api\TeknisiApi@get_jenis_hp_by');
 
 // Produk
 Route::get('/produk-all', 'Api\ProdukApi@produk_all');
+Route::get('/produk-by-user-id/{user_id}', 'Api\ProdukApi@produk_by_user_id');
 Route::post('/produk-insert', 'Api\ProdukApi@produk_insert');
 Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 Route::post('/produk-update', 'Api\ProdukApi@produk_update');
 Route::get('/produk-delete/{id}', 'Api\ProdukApi@produk_delete');
 
+// Beli
+Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
+
+
 // Service Handphone
 Route::get('/service-handphone-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
+Route::get('/service-handphone-history-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_history_by_teknisi');
+//Route::get('/service-handphone-by-pelanggan/{pelanggan_id}', 'Api\ServiceHandphoneApi@service_handphone_by_pelanggan');
+Route::get('/service-handphone-history-by-pelanggan/{pelanggan_id}', 'Api\ServiceHandphoneApi@service_handphone_history_by_pelanggan');
 Route::get('/service-handphone-by-id/{service_handphone_id}', 'Api\ServiceHandphoneApi@service_handphone_by_id');
 Route::post('/service-handphone-insert', 'Api\ServiceHandphoneApi@insert_service_handphone');
 Route::put('/service-handphone-update/{service_handphone_id}', 'Api\ServiceHandphoneApi@update_service_handphone');

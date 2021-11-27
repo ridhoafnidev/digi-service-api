@@ -41,6 +41,30 @@ class ProdukApi extends Controller
         }
     }
 
+    public function produk_by_user_id(Request $request)
+    {
+        $data = DB::table('jual')
+            ->select('jual.*')
+            ->where('jual_user_id', '=', $request->user_id)
+            ->orderBy('jual_id', 'desc')
+            ->get();
+
+        if ($data) {
+            return response()->json([
+                'code' => 200,
+                'result' => $data,
+                'message' => "SUCCESS"
+            ], 200);
+        }else{
+            return response()->json([
+                'code' => 404,
+                'result' => "",
+                'message' => "FAILED"
+            ], 404);
+        }
+    }
+
+
     public function produk_detail($id)
     {
         $data = DB::table('jual')
