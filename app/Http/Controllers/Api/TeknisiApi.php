@@ -53,9 +53,17 @@ class TeknisiApi extends Controller
             ->get();
 
         if ($location != null || $location != '') {
-            echo json_encode(array('code' => 200, 'result' => $location));
+           return response()->json([
+                            'code' => 200,
+                            'result' => $location,
+                            'message' => "SUCCESS"
+                        ], 200);
         } else {
-            echo json_encode(array('code' => 404, 'result' => $location));
+             return response()->json([
+                            'code' => 404,
+                            'result' => "",
+                            'message' => "FAILED"
+                        ], 404);
         }
     }
 
