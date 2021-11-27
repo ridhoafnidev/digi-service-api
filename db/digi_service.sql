@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 26, 2021 at 01:59 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.25
+-- Host: 127.0.0.1
+-- Generation Time: Nov 26, 2021 at 02:35 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -207,7 +207,7 @@ INSERT INTO `jenis_kerusakan_hp` (`id_jenis_kerusakan`, `nama_kerusakan`, `deskr
 
 CREATE TABLE `jual` (
   `jual_id` int(11) NOT NULL,
-  `path_photo` varchar(255) NOT NULL,
+  `foto_produk` varchar(255) NOT NULL,
   `jual_tgl_penjualan` datetime NOT NULL DEFAULT current_timestamp(),
   `jual_status` enum('belum','sudah','booked') NOT NULL DEFAULT 'belum',
   `jual_harga` bigint(20) NOT NULL,
@@ -222,7 +222,7 @@ CREATE TABLE `jual` (
 -- Dumping data for table `jual`
 --
 
-INSERT INTO `jual` (`jual_id`, `path_photo`, `jual_tgl_penjualan`, `jual_status`, `jual_harga`, `jual_deskripsi`, `jual_user_id`, `jual_tujuan`, `jual_judul`, `jual_jenis_hp`) VALUES
+INSERT INTO `jual` (`jual_id`, `foto_produk`, `jual_tgl_penjualan`, `jual_status`, `jual_harga`, `jual_deskripsi`, `jual_user_id`, `jual_tujuan`, `jual_judul`, `jual_jenis_hp`) VALUES
 (1, 'https://www.jakmall.com/blog/content/images/2020/09/sssss.JPG', '2021-08-12 19:58:22', 'belum', 50000, 'Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau presentasi visual seperti font, tipografi, dan tata letak', 1, 'pelanggan', 'Hp Xiomi Redmo Note 9', 1),
 (2, 'https://www.jakmall.com/blog/content/images/2020/09/sssss.JPG', '2021-08-12 19:58:22', 'belum', 50000, 'Lorem ipsum, atau ringkasnya lipsum, adalah teks standar yang ditempatkan untuk mendemostrasikan elemen grafis atau presentasi visual seperti font, tipografi, dan tata letak', 1, 'pelanggan', 'Hp Xiomi Redmo Note 9', 1);
 
