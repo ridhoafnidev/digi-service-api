@@ -19,10 +19,8 @@ class ProdukApi extends Controller
     public function produk_all()
     {
         $data = DB::table('jual')
-            ->select('jual.*', 'jenis_hp.jenis_nama')
-            ->join('jenis_hp', 'jenis_hp.jenis_id', '=', 'jual.jual_jenis_hp')
-            ->join('jenis_hp', 'jual.jual_jenis_hp', '=', 'jenis_hp.jenis_id')
             ->select('jual.*', 'jenis_hp.jenis_nama', 'jenis_hp.jenis_thumbnail')
+            ->join('jenis_hp', 'jenis_hp.jenis_id', '=', 'jual.jual_jenis_hp')
             ->orderBy('jual_id', 'desc')
             ->get();
 
