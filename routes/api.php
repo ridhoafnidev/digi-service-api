@@ -60,6 +60,8 @@ Route::get('/jenis-hp-by/{teknisi_id}', 'Api\TeknisiApi@get_jenis_hp_by');
 Route::get('/produk-all', 'Api\ProdukApi@produk_all');
 Route::post('/produk-insert', 'Api\ProdukApi@produk_insert');
 Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
+Route::post('/produk-update', 'Api\ProdukApi@produk_update');
+Route::get('/produk-delete/{id}', 'Api\ProdukApi@produk_delete');
 
 // Service Handphone
 Route::get('/service-handphone-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
