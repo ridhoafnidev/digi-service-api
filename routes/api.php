@@ -86,3 +86,7 @@ Route::get('/users-by/{token}/{reference}/{value}', 'ApiController@users_by');
 
 // Beli
 Route::post('/buy-product', 'Api\BeliApi@buy_product');
+Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
+
+// Jenis Hp dan Jenis Kerusakan
+Route::get('/get-jenis-kerusakan-hp', 'ApiController@get_all_jenis_kerusakan_hp');

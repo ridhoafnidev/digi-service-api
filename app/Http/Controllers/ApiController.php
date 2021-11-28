@@ -74,4 +74,20 @@ class ApiController extends Controller
         }
     }
 
+    public function get_all_jenis_kerusakan_hp(){
+        $jenisHp = DB::table('jenis_hp')->orderBy('jenis_nama', 'ASC')->get();
+        $jenisKerusakanHp = DB::table('jenis_kerusakan_hp')->orderBy('nama_kerusakan', 'ASC')->get();
+        if (sizeof($jenisHp) > 0){
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Berhasil diupdate',
+                'result' => [
+                    'jenis_kerusakan' => $jenisKerusakanHp,
+                    'jenis_hp' => $jenisHp
+                ],
+            ], 200);
+        }
+    }
+
 }
