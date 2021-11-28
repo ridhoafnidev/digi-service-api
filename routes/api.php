@@ -64,10 +64,6 @@ Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 Route::post('/produk-update', 'Api\ProdukApi@produk_update');
 Route::get('/produk-delete/{id}', 'Api\ProdukApi@produk_delete');
 
-// Beli
-Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
-
-
 // Service Handphone
 Route::get('/service-handphone-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
 Route::get('/service-handphone-history-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_history_by_teknisi');
@@ -84,7 +80,9 @@ Route::post('/login', 'Api\AuthApi@login');
 //Route::post('/register-service', 'Api\AuthApi@register_servicer');
 //Route::post('/register-buyer', 'Api\AuthApi@register_buyer');
 
-
 Route::get('/user-all/{token}', 'ApiController@user_all');
 Route::get('/user-one/{token}/{reference}/{value}', 'ApiController@user_one_by');
 Route::get('/users-by/{token}/{reference}/{value}', 'ApiController@users_by');
+
+// Beli
+Route::post('/buy-product', 'Api\BeliApi@buy_product');
