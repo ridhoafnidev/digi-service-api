@@ -9,11 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class BeliApi extends Controller
 {
-    public function history_beli_produk_by_user_id(Request $request) {
+    public function history_beli_produk_by_user_id(Request $request)
+    {
         $user = User::where("id", $request->beli_pembeli)->first();
         $level = $user->level;
-
-        $history_beli_produk ="";
 
         if($level == "teknisi"){
             $history_beli_produk = DB::table('beli')
@@ -43,5 +42,31 @@ class BeliApi extends Controller
                 'message' => "FAILED"
             ], 404);
         }
+    }
+
+    public function update_status_product_by_user_id(Request $request)
+    {
+        $update_status_beli_product = DB::table("beli")
+            ->where('beli_id', '=', $request->beli_id)
+            ->update([
+                'beli_status' => $request->beli_status
+            ]);
+
+        if ($update_status_beli_product) {
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Update Berhasil Disimpan!',
+                'result' => "",
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 400,
+                'status' => "FAILED",
+                'message' => 'Update Gagal Disimpan!',
+                'result' => "",
+            ], 400);
+        }
+
     }
 }

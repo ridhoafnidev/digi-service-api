@@ -64,6 +64,7 @@ Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 
 // Beli
 Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
+Route::post('/update-status-beli-product/{beli_id}', 'Api\BeliApi@update_status_product_by_user_id');
 
 
 // Service Handphone
