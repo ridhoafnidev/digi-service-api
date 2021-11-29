@@ -30,9 +30,9 @@ Route::get('/teknisi-one/{reference}/{value}', 'Api\TeknisiApi@teknisi_one_by');
 
 //Pelanggan
 Route::get('/pelanggan-all', 'Api\PelangganApi@pelanggan_all');
-Route::get('/pelanggan-insert', 'Api\PelangganApi@insert_pelanggan');
-Route::get('/pelanggan-update/{id}', 'Api\PelangganApi@update_pelanggan');
-Route::get('/pelanggan-delete/{id}', 'Api\PelangganApi@delete_pelanggan');
+Route::post('/pelanggan-insert', 'Api\PelangganApi@insert_pelanggan');
+Route::post('/pelanggan-update/{id}', 'Api\PelangganApi@update_pelanggan');
+Route::delete('/pelanggan-delete/{id}', 'Api\PelangganApi@delete_pelanggan');
 Route::get('/pelanggan-by/{reference}/{value}', 'Api\PelangganApi@pelanggan_by');
 Route::get('/pelanggan-one/{reference}/{value}', 'Api\PelangganApi@pelanggan_one_by');
 
@@ -61,6 +61,8 @@ Route::get('/produk-all', 'Api\ProdukApi@produk_all');
 Route::get('/produk-by-user-id/{user_id}', 'Api\ProdukApi@produk_by_user_id');
 Route::post('/produk-insert', 'Api\ProdukApi@produk_insert');
 Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
+Route::post('/produk-update', 'Api\ProdukApi@produk_update');
+Route::get('/produk-delete/{id}', 'Api\ProdukApi@produk_delete');
 
 // Beli
 Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
@@ -83,7 +85,13 @@ Route::post('/login', 'Api\AuthApi@login');
 //Route::post('/register-service', 'Api\AuthApi@register_servicer');
 //Route::post('/register-buyer', 'Api\AuthApi@register_buyer');
 
-
 Route::get('/user-all/{token}', 'ApiController@user_all');
 Route::get('/user-one/{token}/{reference}/{value}', 'ApiController@user_one_by');
 Route::get('/users-by/{token}/{reference}/{value}', 'ApiController@users_by');
+
+// Beli
+Route::post('/buy-product', 'Api\BeliApi@buy_product');
+Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
+
+// Jenis Hp dan Jenis Kerusakan
+Route::get('/get-jenis-kerusakan-hp', 'ApiController@get_all_jenis_kerusakan_hp');

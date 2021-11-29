@@ -123,18 +123,32 @@ class PelangganApi extends Controller
     }
 
     public function update_pelanggan($id,Request $request){
-        $pelanggan = Pelanggan::find($id);
-        $pelanggan->email = $request->email;
-        $pelanggan->pelanggan_nama = $request->pelanggan_nama;
-        $pelanggan->pelanggan_alamat = $request->pelanggan_alamat;
-        $pelanggan->pelanggan_lat = $request->pelanggan_lat;
-        $pelanggan->pelanggan_lng = $request->pelanggan_lng;
-        $pelanggan->pelanggan_hp = $request->pelanggan_hp;
-        $pelanggan->save();
-        if($pelanggan){
-            echo json_encode(array('kode' => 200, 'status' => "Berhasil"));
+        $user = User::find($id);
+        $pelanggan = Pelanggan::find($request->pelanggan_id);
+
+        $user->name = $request->pelanggan_nama;
+        $user->email = $request->pelanggan_email;
+        if ($user->save()){
+            $pelanggan->email = $request->pelanggan_email;
+            $pelanggan->pelanggan_nama = $request->pelanggan_nama;
+            $pelanggan->pelanggan_alamat = $request->pelanggan_alamat;
+            $pelanggan->pelanggan_hp = $request->pelanggan_hp;
+            $pelanggan->save();
+        }
+        if($pelanggan && $user){
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Berhasil Diupdate!',
+                'result' => "",
+            ], 200);
         }else{
-            echo json_encode(array('kode' => 404, 'status' => "Gagal"));
+            return response()->json([
+                'code' => 422,
+                'status' => "SUCCESS",
+                'message' => 'Berhasil Diupdate!',
+                'result' => "",
+            ], 422);
         }
     }
 

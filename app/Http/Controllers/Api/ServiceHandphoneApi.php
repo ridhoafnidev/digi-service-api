@@ -104,7 +104,6 @@ class ServiceHandphoneApi extends Controller
         }
     }
 
-
     public function service_handphone_history_by_pelanggan(Request $request)
     {
         $service_handphone = DB::table("service_handphone")
