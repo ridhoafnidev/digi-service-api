@@ -42,7 +42,8 @@ class ProdukApi extends Controller
     public function produk_by_user_id(Request $request)
     {
         $data = DB::table('jual')
-            ->select('jual.*')
+            ->select('jual.*', 'jenis_hp.jenis_nama', 'jenis_hp.jenis_thumbnail')
+            ->join('jenis_hp', 'jenis_hp.jenis_id', '=', 'jual.jual_jenis_hp')
             ->where('jual_user_id', '=', $request->user_id)
             ->orderBy('jual_id', 'desc')
             ->get();

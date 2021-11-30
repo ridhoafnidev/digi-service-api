@@ -83,10 +83,10 @@ class ServiceHandphoneApi extends Controller
         }
     }
 
-    public function service_handphone_history_by_teknisi(Request $request)
+    public function service_handphone_history_by_teknisi($id)
     {
         $service_handphone = DB::table("service_handphone")
-            ->where('teknisi_id', '=', $request->teknisi_id)
+            ->where('teknisi_id', '=', $id)
             ->join('pelanggan', 'service_handphone.pelanggan_id', '=', 'pelanggan.pelanggan_id')
             ->get();
         if ($service_handphone) {
@@ -97,10 +97,10 @@ class ServiceHandphoneApi extends Controller
             ], 200);
         }else{
             return response()->json([
-                'code' => 404,
+                'code' => 500,
                 'result' => "",
                 'message' => "FAILED"
-            ], 404);
+            ], 500);
         }
     }
 

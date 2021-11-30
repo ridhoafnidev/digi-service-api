@@ -90,3 +90,6 @@ Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@histor
 
 // Jenis Hp dan Jenis Kerusakan
 Route::get('/get-jenis-kerusakan-hp', 'ApiController@get_all_jenis_kerusakan_hp');
+
+// Review
+Route::post('/review', 'Api\BeliApi@review');
