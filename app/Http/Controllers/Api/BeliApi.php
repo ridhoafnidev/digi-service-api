@@ -129,4 +129,30 @@ class BeliApi extends Controller
             ], 404);
         }
     }
+
+    public function update_status_product_by_user_id(Request $request)
+    {
+        $update_status_beli_product = DB::table("beli")
+            ->where('beli_id', '=', $request->beli_id)
+            ->update([
+                'beli_status' => $request->beli_status
+            ]);
+
+        if ($update_status_beli_product) {
+            return response()->json([
+                'code' => 200,
+                'status' => "SUCCESS",
+                'message' => 'Update Berhasil Disimpan!',
+                'result' => "",
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 400,
+                'status' => "FAILED",
+                'message' => 'Update Gagal Disimpan!',
+                'result' => "",
+            ], 400);
+        }
+
+    }
 }

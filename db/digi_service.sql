@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 28, 2021 at 06:29 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.3.29
+-- Host: localhost
+-- Generation Time: Nov 30, 2021 at 05:54 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -95,8 +95,9 @@ CREATE TABLE `beli` (
 
 INSERT INTO `beli` (`beli_id`, `beli_jual_id`, `beli_status`, `beli_tgl_beli`, `beli_jasa_kurir`, `beli_pembeli`, `beli_tgl_booking`) VALUES
 (5, 4, 'booking', '2021-11-28 13:02:58', 'Tidak', 25, '2021-11-28 13:02:58'),
-(7, 4, 'booking', '2021-11-28 13:02:58', 'Tidak', 2, '2021-11-28 13:02:58'),
-(8, 3, 'booking', '2021-11-28 15:37:29', 'Ya', 2, '2021-11-28 15:37:29');
+(7, 4, 'dibatalkan', '2021-11-28 13:02:58', 'Tidak', 2, '2021-11-28 13:02:58'),
+(8, 3, 'dibatalkan', '2021-11-28 15:37:29', 'Ya', 2, '2021-11-28 15:37:29'),
+(9, 5, 'dibatalkan', '2021-11-30 11:04:43', 'Ya', 2, '2021-11-30 11:04:43');
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,14 @@ CREATE TABLE `detail_teknisi_jenis_hp` (
 INSERT INTO `detail_teknisi_jenis_hp` (`id`, `teknisi_jenis_hp_id`, `jenis_hp_id`, `teknisi_id`) VALUES
 (45, 19, 3, 2),
 (46, 19, 1, 2),
-(47, 20, 1, 4);
+(47, 20, 1, 4),
+(48, 20, 1, 1),
+(49, 20, 3, 1),
+(50, 21, 3, 1),
+(51, 22, 3, 1),
+(52, 23, 1, 1),
+(53, 23, 2, 1),
+(54, 23, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +148,13 @@ CREATE TABLE `detail_teknisi_jenis_kerusakan_hp` (
 INSERT INTO `detail_teknisi_jenis_kerusakan_hp` (`id`, `teknisi_kerusakan_jenis_hp_id`, `teknisi_id`, `jenis_kerusakan_hp_id`) VALUES
 (40, 15, 2, 1),
 (41, 15, 2, 2),
-(42, 19, 4, 2);
+(42, 19, 4, 2),
+(43, 20, 1, 1),
+(44, 20, 1, 2),
+(45, 21, 1, 1),
+(46, 22, 1, 1),
+(47, 23, 1, 1),
+(48, 23, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -429,7 +443,7 @@ CREATE TABLE `teknisi` (
   `teknisi_total_score` int(11) DEFAULT NULL,
   `teknisi_total_responden` int(11) DEFAULT NULL,
   `teknisi_deskripsi` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `teknisi_foto` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `teknisi_foto` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '-',
   `teknisi_sertifikat` text CHARACTER SET utf8mb4 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -496,7 +510,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `akses_id` int(11) DEFAULT NULL,
+  `akses_id` int(11) DEFAULT 0,
   `level` enum('teknisi','pelanggan','admin') NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -526,9 +540,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ak
 (19, 'Abdul fwefw', 'newuser5@gmail.com', NULL, '$2y$10$8FxdckTfpmReW8Q5bSEgBexIQzKjJYHIcMazXjGO9T2LC5.8ogbpi', NULL, 'teknisi', NULL, '2021-11-19 08:10:10', '2021-11-19 08:10:10'),
 (20, 'Abdul fwefw', 'newuser6@gmail.com', NULL, '$2y$10$7eYAvZ1SBdxeweAQIqqyB.E2I570EDr3aY045V9goJ2wdPPWiHESO', NULL, 'teknisi', NULL, '2021-11-19 19:10:28', '2021-11-19 19:10:28'),
 (21, 'Abdul fwefw', 'newuser7@gmail.com', NULL, '$2y$10$v6QTRtI99U4yNmbrlVSkJO/BJuT3EoW55mKr.nEztbgBv0l.cknHW', NULL, 'teknisi', NULL, '2021-11-19 19:14:31', '2021-11-19 19:14:31'),
-(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40'),
-(24, 'Abdul Hafiz Ramadan', 'abdul123@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-11-25 01:58:26', '2021-11-25 01:58:26'),
-(25, 'pelanggan', 'pelanggan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-04-09 05:11:01', '2021-11-26 01:04:07');
+(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40');
 
 --
 -- Indexes for dumped tables
@@ -681,19 +693,19 @@ ALTER TABLE `api`
 -- AUTO_INCREMENT for table `beli`
 --
 ALTER TABLE `beli`
-  MODIFY `beli_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `beli_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `detail_teknisi_jenis_hp`
 --
 ALTER TABLE `detail_teknisi_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `detail_teknisi_jenis_kerusakan_hp`
 --
 ALTER TABLE `detail_teknisi_jenis_kerusakan_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -777,7 +789,7 @@ ALTER TABLE `service_handphone`
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `teknisi_jenis_hp`
@@ -789,13 +801,13 @@ ALTER TABLE `teknisi_jenis_hp`
 -- AUTO_INCREMENT for table `teknisi_kerusakan_jenis_hp`
 --
 ALTER TABLE `teknisi_kerusakan_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

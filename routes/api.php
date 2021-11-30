@@ -64,6 +64,11 @@ Route::get('/produk-detail/{id}', 'Api\ProdukApi@produk_detail');
 Route::post('/produk-update', 'Api\ProdukApi@produk_update');
 Route::get('/produk-delete/{id}', 'Api\ProdukApi@produk_delete');
 
+// Beli
+Route::get('/history-beli-produk-by-user-id/{beli_pembeli}', 'Api\BeliApi@history_beli_produk_by_user_id');
+Route::post('/update-status-beli-product/{beli_id}', 'Api\BeliApi@update_status_product_by_user_id');
+
+
 // Service Handphone
 Route::get('/service-handphone-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_by_teknisi');
 Route::get('/service-handphone-history-by-teknisi/{teknisi_id}', 'Api\ServiceHandphoneApi@service_handphone_history_by_teknisi');

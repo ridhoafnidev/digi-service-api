@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Produk;
 use App\Teknisi;
-use App\TeknisiKerusakanJenisHp;
+use App\TeknisiJenisHp;
 use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
