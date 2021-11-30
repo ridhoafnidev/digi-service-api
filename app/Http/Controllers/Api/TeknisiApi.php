@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Teknisi;
+use App\TeknisiJenisHp;
 use App\TeknisiKerusakanJenisHp;
 use App\User;
 use Illuminate\Database\QueryException;
@@ -290,20 +291,24 @@ class TeknisiApi extends Controller
         $dataJenisHp = $rawData['jenis_hp'];
         $dataJenisKerusakanHp = $rawData['jenis_kerusakan_hp'];
 
-        $teknisiJenisKerusakanHp = new TeknisiKerusakanJenisHp();
-        $teknisiJenisKerusakanHp->deskripsi = $deskripsi;
-        $teknisiJenisKerusakanHp->teknisi_id = $teknisi_id;
-        $teknisiJenisKerusakanHp->save();
+        $teknisiJenisHp = new TeknisiJenisHp();
+        $teknisiJenisHp->deskripsi = $deskripsi;
+        $teknisiJenisHp->teknisi_id = $teknisi_id;
+        $teknisiJenisHp->save();
 
         for($size = 0; $size < sizeof($dataJenisHp); $size++){
             $detailTeknisiJenisHp = DB::table('detail_teknisi_jenis_hp')->insert(
             [
-                'teknisi_jenis_hp_id' => $teknisiJenisKerusakanHp['id'],
+                'teknisi_jenis_hp_id' => $teknisiJenisHp['id'],
                 'jenis_hp_id' => $dataJenisHp[$size]['jenis_hp_id'],
                 'teknisi_id' => $teknisi_id
             ]);
         }
 
+        $teknisiJenisKerusakanHp = new TeknisiKerusakanJenisHp();
+        $teknisiJenisKerusakanHp->deskripsi = $deskripsi;
+        $teknisiJenisKerusakanHp->teknisi_id = $teknisi_id;
+        $teknisiJenisKerusakanHp->save();
 
         for($size = 0; $size < sizeof($dataJenisKerusakanHp); $size++){
             $detailTeknisiJenisKerusakanHp = DB::table('detail_teknisi_jenis_kerusakan_hp')->insert(
@@ -486,7 +491,7 @@ class TeknisiApi extends Controller
         $dataJenisHp = $rawData['jenis_hp'];
         $dataJenisKerusakanHp = $rawData['jenis_kerusakan_hp'];
 
-        $teknisiJenisKerusakanHp = new TeknisiKerusakanJenisHp();
+        $teknisiJenisKerusakanHp = new TeknisiJenisHp();
         $teknisiJenisKerusakanHp->deskripsi = $deskripsi;
         $teknisiJenisKerusakanHp->teknisi_id = $teknisi_id;
         $teknisiJenisKerusakanHp->save();
