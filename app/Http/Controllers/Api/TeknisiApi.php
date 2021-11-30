@@ -225,7 +225,7 @@ class TeknisiApi extends Controller
                     if ($users && $teknisi)
                     {
                         return response()->json([
-                            'code' => true,
+                            'code' => 201,
                             'message' => 'Post Berhasil Disimpan!',
                         ], 200);
                     }
@@ -256,7 +256,7 @@ class TeknisiApi extends Controller
                     $teknisi->teknisi_alamat = $request->teknisi_alamat;
                     $teknisi->teknisi_lat = $request->teknisi_lat;
                     $teknisi->teknisi_lng = $request->teknisi_lng;
-//                    $teknisi->teknisi_hp = $request->teknisi_hp;
+                    $teknisi->teknisi_hp = $request->teknisi_hp;
 //                    $teknisi->teknisi_total_score = $request->teknisi_total_score;
 //                    $teknisi->teknisi_total_responden = $request->teknisi_total_responden;
                     $teknisi->teknisi_deskripsi = $request->teknisi_deskripsi;
@@ -266,7 +266,7 @@ class TeknisiApi extends Controller
                 if ($users && $teknisi)
                 {
                     return response()->json([
-                        'code' => true,
+                        'code' => 201,
                         'message' => 'SUCCESS',
                     ], 200);
                 }
