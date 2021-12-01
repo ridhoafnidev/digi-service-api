@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 01, 2021 at 02:36 AM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 7.3.29
+-- Host: localhost
+-- Generation Time: Dec 01, 2021 at 01:06 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -121,7 +121,8 @@ CREATE TABLE `detail_teknisi_jenis_hp` (
 INSERT INTO `detail_teknisi_jenis_hp` (`id`, `teknisi_jenis_hp_id`, `jenis_hp_id`, `teknisi_id`) VALUES
 (45, 19, 3, 2),
 (46, 19, 1, 2),
-(47, 20, 1, 4);
+(47, 20, 1, 4),
+(48, 21, 2, 19);
 
 -- --------------------------------------------------------
 
@@ -143,7 +144,8 @@ CREATE TABLE `detail_teknisi_jenis_kerusakan_hp` (
 INSERT INTO `detail_teknisi_jenis_kerusakan_hp` (`id`, `teknisi_kerusakan_jenis_hp_id`, `teknisi_id`, `jenis_kerusakan_hp_id`) VALUES
 (40, 15, 2, 1),
 (41, 15, 2, 2),
-(42, 19, 4, 2);
+(42, 19, 4, 2),
+(43, 20, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -298,7 +300,7 @@ CREATE TABLE `pelanggan` (
   `pelanggan_nama` varchar(255) NOT NULL,
   `pelanggan_hp` varchar(14) NOT NULL,
   `pelanggan_alamat` varchar(255) NOT NULL,
-  `pelanggan_foto` text DEFAULT NULL,
+  `pelanggan_foto` text NOT NULL DEFAULT '-',
   `pelanggan_date_created` timestamp NOT NULL DEFAULT current_timestamp(),
   `pelanggan_date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `pelanggan_lat` text NOT NULL,
@@ -313,7 +315,14 @@ CREATE TABLE `pelanggan` (
 
 INSERT INTO `pelanggan` (`pelanggan_id`, `email`, `pelanggan_nama`, `pelanggan_hp`, `pelanggan_alamat`, `pelanggan_foto`, `pelanggan_date_created`, `pelanggan_date_updated`, `pelanggan_lat`, `pelanggan_lng`, `pelanggan_total_score`, `pelanggan_total_responden`) VALUES
 (4, 'abdul123@gmail.com', 'Abdul Hafiz Ramadan', 'Vivo', 'Bukit Datuk', 'https://img.lovepik.com/photo/50118/9025.jpg_wh860.jpg', '2021-11-25 01:56:17', '2021-11-25 13:41:34', '-', '-', 0, 0),
-(6, 'pelanggan@gmail.com', 'pelanggan', '081234548765', 'Bumi', 'https://image.freepik.com/free-photo/smiling-asian-man-standing-with-hands-folded-concept-engineering-jobs_264197-8835.jpg', '2021-11-25 13:49:21', '2021-11-30 14:53:25', '0', '0', 4, 1);
+(6, 'pelanggan@gmail.com', 'pelanggan', '081234548765', 'Bumi', 'https://image.freepik.com/free-photo/smiling-asian-man-standing-with-hands-folded-concept-engineering-jobs_264197-8835.jpg', '2021-11-25 13:49:21', '2021-11-30 14:53:25', '0', '0', 4, 1),
+(7, 'abdul@pelanggan.id', 'Abdul Pelanggan', '0349823402', 'lakffwakje', '-', '2021-12-01 05:00:16', '2021-12-01 05:00:16', '0.0', '0.0', 0, 0),
+(8, 'fk@pelanggan.id', 'fkewanfw', '03494303292', 'f3434t3', '-', '2021-12-01 07:40:29', '2021-12-01 07:40:29', '0.0', '0.0', 0, 0),
+(9, 'if@pelanggan.id', 'lfakwejfwlke', '00394239', 'kfajfew', '-', '2021-12-01 07:49:35', '2021-12-01 07:49:35', '0.0', '0.0', 0, 0),
+(10, 'ia@pelanggan.id', 'lafwofw', '0842940284', 'fjkewjae', '-', '2021-12-01 07:57:52', '2021-12-01 07:57:52', '0.0', '0.0', 0, 0),
+(11, 'po@pelanggan.id', 'poqew', '08942342', 'kafjawlkef', '-', '2021-12-01 08:01:36', '2021-12-01 08:01:36', '0.0', '0.0', 0, 0),
+(12, 'kg@pelanggan.id', 'kgkreler', '0984329402', 'akfjnwekf', '-', '2021-12-01 08:04:21', '2021-12-01 08:04:21', '0.0', '0.0', 0, 0),
+(13, 'mn@pelanggan.id', 'mnbjgj', '635535235', 'fwafwe', '-', '2021-12-01 08:13:44', '2021-12-01 08:13:44', '0.0', '0.0', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -454,7 +463,8 @@ INSERT INTO `teknisi` (`teknisi_id`, `email`, `teknisi_nama`, `teknisi_nama_toko
 (4, 'test@gmail.com', 'test', 'Toko I', 'PKU', '0.00', '0.00', '081275753271', '2021-11-06 22:35:17', '2021-11-02 18:46:23', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (5, 'test2@gmail.com', 'test2', 'test2', 'test2', '0.0', '0.0', '081275753271', '2021-11-06 22:35:18', '2021-11-02 19:01:46', 50, 14, 'test2', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (6, 'yaya@gmail.com', 'yaya', 'yaya', 'yaya', '0.0', '0.0', '081275753271', '2021-11-06 22:35:20', '2021-11-03 09:21:44', 50, 14, 'yaya', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
-(7, 'haha@gmail.com', 'haha', 'haha', 'haha', '0.0', '0.0', '081275753271', '2021-11-06 22:35:21', '2021-11-03 09:22:52', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg');
+(7, 'haha@gmail.com', 'haha', 'haha', 'haha', '0.0', '0.0', '081275753271', '2021-11-06 22:35:21', '2021-11-03 09:22:52', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
+(19, 'satuteknisi@teknisi.id', 'satu teknisi', 'nana', 'gseaerg', '0.0', '0.0', '03423423423', '2021-12-01 04:46:06', '2021-11-30 19:43:40', NULL, 0, 'gweawg', '-', NULL);
 
 -- --------------------------------------------------------
 
@@ -474,7 +484,8 @@ CREATE TABLE `teknisi_jenis_hp` (
 
 INSERT INTO `teknisi_jenis_hp` (`id`, `deskripsi`, `teknisi_id`) VALUES
 (19, 'Testing', 2),
-(20, 'Testing 2', 4);
+(20, 'Testing 2', 4),
+(21, 'nanana', 19);
 
 -- --------------------------------------------------------
 
@@ -494,7 +505,8 @@ CREATE TABLE `teknisi_kerusakan_jenis_hp` (
 
 INSERT INTO `teknisi_kerusakan_jenis_hp` (`id`, `deskripsi`, `teknisi_id`) VALUES
 (15, 'deskripsi', 2),
-(19, 'deskri 2psi', 4);
+(19, 'deskri 2psi', 4),
+(20, 'nanana', 19);
 
 -- --------------------------------------------------------
 
@@ -540,7 +552,15 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ak
 (21, 'Abdul fwefw', 'newuser7@gmail.com', NULL, '$2y$10$v6QTRtI99U4yNmbrlVSkJO/BJuT3EoW55mKr.nEztbgBv0l.cknHW', NULL, 'teknisi', NULL, '2021-11-19 19:14:31', '2021-11-19 19:14:31'),
 (22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40'),
 (24, 'Abdul Hafiz Ramadan', 'abdul123@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-11-25 01:58:26', '2021-11-25 01:58:26'),
-(25, 'pelanggan', 'pelanggan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-04-09 05:11:01', '2021-11-26 01:04:07');
+(25, 'pelanggan', 'pelanggan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-04-09 05:11:01', '2021-11-26 01:04:07'),
+(26, 'satu teknisi', 'satuteknisi@teknisi.id', NULL, '$2y$10$rpKbmrFQjyZB6CUAgSMv0u3ivBuzVo6UI1UOq4lsrqW6tI22xhL7O', 0, 'teknisi', NULL, '2021-11-30 19:43:40', '2021-11-30 19:43:40'),
+(28, 'Abdul Pelanggan', 'abdul@pelanggan.id', NULL, '$2y$10$uGyOI9/MI2bWK.coRdi.Tu1ZCUJqJUORQKTdx.ezsu6Z6Bv6BU2HK', NULL, 'pelanggan', NULL, '2021-11-30 22:00:16', '2021-11-30 22:00:16'),
+(29, 'fkewanfw', 'fk@pelanggan.id', NULL, '$2y$10$kUJOmc3h.j9qVzEq/WU/GeWyx2zTie4A/3BOpqS73vwHcV9ggaDjS', NULL, 'pelanggan', NULL, '2021-12-01 00:40:29', '2021-12-01 00:40:29'),
+(30, 'lfakwejfwlke', 'if@pelanggan.id', NULL, '$2y$10$fMRbiQ4NaqccDnpDTrZxHO4tIpD1XZ8CU9XXzdxzkJnQtzh.zNdxO', NULL, 'pelanggan', NULL, '2021-12-01 00:49:35', '2021-12-01 00:49:35'),
+(31, 'lafwofw', 'ia@pelanggan.id', NULL, '$2y$10$4OWn3Z8m5csa11mZhQY.R.b4Bxnnf5wXZKJOnGNWi8KwiBKkYDnWK', NULL, 'pelanggan', NULL, '2021-12-01 00:57:52', '2021-12-01 00:57:52'),
+(32, 'poqew', 'po@pelanggan.id', NULL, '$2y$10$revWxjytb6AwGX2w5YNR/OwCElWaiYSPvlcUA7AQiFbeem2UMzrXa', NULL, 'pelanggan', NULL, '2021-12-01 01:01:36', '2021-12-01 01:01:36'),
+(33, 'kgkreler', 'kg@pelanggan.id', NULL, '$2y$10$mAMUirnuzQ66/ECsR5aapuK1Zdr7XLn8r/Gz0.GAAtGGOUJHzPl6m', 0, 'pelanggan', NULL, '2021-12-01 01:04:21', '2021-12-01 01:04:21'),
+(34, 'mnbjgj', 'mn@pelanggan.id', NULL, '$2y$10$zVNWZmKM0Wgt3ek3nlP39ez2aoC6KCcrgr/RIwRzCVCTsnH6NCAXG', 0, 'pelanggan', NULL, '2021-12-01 01:13:44', '2021-12-01 01:13:44');
 
 --
 -- Indexes for dumped tables
@@ -699,13 +719,13 @@ ALTER TABLE `beli`
 -- AUTO_INCREMENT for table `detail_teknisi_jenis_hp`
 --
 ALTER TABLE `detail_teknisi_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `detail_teknisi_jenis_kerusakan_hp`
 --
 ALTER TABLE `detail_teknisi_jenis_kerusakan_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -753,7 +773,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `pelanggan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `pelanggan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `pesan`
@@ -789,25 +809,25 @@ ALTER TABLE `service_handphone`
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `teknisi_jenis_hp`
 --
 ALTER TABLE `teknisi_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `teknisi_kerusakan_jenis_hp`
 --
 ALTER TABLE `teknisi_kerusakan_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
