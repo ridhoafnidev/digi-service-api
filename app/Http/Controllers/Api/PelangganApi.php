@@ -38,6 +38,7 @@ class PelangganApi extends Controller
     public function insert_pelanggan(Request $request){
         $pelanggan = new Pelanggan();
         $users = new User();
+        $users->akses_id = 0;
 
         $pelanggan_foto = $request->file('pelanggan_foto');
 
@@ -107,16 +108,18 @@ class PelangganApi extends Controller
                 if ($users && $pelanggan)
                 {
                     return response()->json([
+                        'code' => 201,
                         'success' => true,
                         'message' => 'Post Berhasil Disimpan!',
-                    ], 200);
+                    ], 201);
                 }
                 else
                 {
                     return response()->json([
+                        'code' => 500,
                         'success' => false,
                         'message' => 'Gagal Disimpan!',
-                    ], 404);
+                    ], 500);
                 }
             }
         }
