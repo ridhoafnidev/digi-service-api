@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 30, 2021 at 05:54 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.25
+-- Host: 127.0.0.1
+-- Generation Time: Dec 01, 2021 at 02:36 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,18 +86,20 @@ CREATE TABLE `beli` (
   `beli_tgl_beli` datetime NOT NULL DEFAULT current_timestamp(),
   `beli_jasa_kurir` enum('Ya','Tidak') NOT NULL,
   `beli_pembeli` int(11) NOT NULL,
-  `beli_tgl_booking` datetime NOT NULL DEFAULT current_timestamp()
+  `beli_tgl_booking` datetime NOT NULL DEFAULT current_timestamp(),
+  `rating` float NOT NULL DEFAULT 0,
+  `isi_review` text NOT NULL DEFAULT '',
+  `is_reviewed` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `beli`
 --
 
-INSERT INTO `beli` (`beli_id`, `beli_jual_id`, `beli_status`, `beli_tgl_beli`, `beli_jasa_kurir`, `beli_pembeli`, `beli_tgl_booking`) VALUES
-(5, 4, 'booking', '2021-11-28 13:02:58', 'Tidak', 25, '2021-11-28 13:02:58'),
-(7, 4, 'dibatalkan', '2021-11-28 13:02:58', 'Tidak', 2, '2021-11-28 13:02:58'),
-(8, 3, 'dibatalkan', '2021-11-28 15:37:29', 'Ya', 2, '2021-11-28 15:37:29'),
-(9, 5, 'dibatalkan', '2021-11-30 11:04:43', 'Ya', 2, '2021-11-30 11:04:43');
+INSERT INTO `beli` (`beli_id`, `beli_jual_id`, `beli_status`, `beli_tgl_beli`, `beli_jasa_kurir`, `beli_pembeli`, `beli_tgl_booking`, `rating`, `isi_review`, `is_reviewed`) VALUES
+(5, 4, 'booking', '2021-11-28 13:02:58', 'Tidak', 25, '2021-11-28 13:02:58', 4, 'Good ya', 1),
+(7, 4, 'booking', '2021-11-28 13:02:58', 'Tidak', 2, '2021-11-28 13:02:58', 0, '', 0),
+(8, 3, 'booking', '2021-11-28 15:37:29', 'Ya', 2, '2021-11-28 15:37:29', 0, 'Good', 0);
 
 -- --------------------------------------------------------
 
@@ -119,14 +121,7 @@ CREATE TABLE `detail_teknisi_jenis_hp` (
 INSERT INTO `detail_teknisi_jenis_hp` (`id`, `teknisi_jenis_hp_id`, `jenis_hp_id`, `teknisi_id`) VALUES
 (45, 19, 3, 2),
 (46, 19, 1, 2),
-(47, 20, 1, 4),
-(48, 20, 1, 1),
-(49, 20, 3, 1),
-(50, 21, 3, 1),
-(51, 22, 3, 1),
-(52, 23, 1, 1),
-(53, 23, 2, 1),
-(54, 23, 3, 1);
+(47, 20, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -148,13 +143,7 @@ CREATE TABLE `detail_teknisi_jenis_kerusakan_hp` (
 INSERT INTO `detail_teknisi_jenis_kerusakan_hp` (`id`, `teknisi_kerusakan_jenis_hp_id`, `teknisi_id`, `jenis_kerusakan_hp_id`) VALUES
 (40, 15, 2, 1),
 (41, 15, 2, 2),
-(42, 19, 4, 2),
-(43, 20, 1, 1),
-(44, 20, 1, 2),
-(45, 21, 1, 1),
-(46, 22, 1, 1),
-(47, 23, 1, 1),
-(48, 23, 1, 2);
+(42, 19, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -313,16 +302,18 @@ CREATE TABLE `pelanggan` (
   `pelanggan_date_created` timestamp NOT NULL DEFAULT current_timestamp(),
   `pelanggan_date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `pelanggan_lat` text NOT NULL,
-  `pelanggan_lng` text NOT NULL
+  `pelanggan_lng` text NOT NULL,
+  `pelanggan_total_score` int(11) NOT NULL DEFAULT 0,
+  `pelanggan_total_responden` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `pelanggan`
 --
 
-INSERT INTO `pelanggan` (`pelanggan_id`, `email`, `pelanggan_nama`, `pelanggan_hp`, `pelanggan_alamat`, `pelanggan_foto`, `pelanggan_date_created`, `pelanggan_date_updated`, `pelanggan_lat`, `pelanggan_lng`) VALUES
-(4, 'abdul123@gmail.com', 'Abdul Hafiz Ramadan', 'Vivo', 'Bukit Datuk', 'https://img.lovepik.com/photo/50118/9025.jpg_wh860.jpg', '2021-11-25 01:56:17', '2021-11-25 13:41:34', '-', '-'),
-(6, 'pelanggan@gmail.com', 'pelanggan', '081234548765', 'Bumi', 'https://image.freepik.com/free-photo/smiling-asian-man-standing-with-hands-folded-concept-engineering-jobs_264197-8835.jpg', '2021-11-25 13:49:21', '2021-11-26 08:07:50', '0', '0');
+INSERT INTO `pelanggan` (`pelanggan_id`, `email`, `pelanggan_nama`, `pelanggan_hp`, `pelanggan_alamat`, `pelanggan_foto`, `pelanggan_date_created`, `pelanggan_date_updated`, `pelanggan_lat`, `pelanggan_lng`, `pelanggan_total_score`, `pelanggan_total_responden`) VALUES
+(4, 'abdul123@gmail.com', 'Abdul Hafiz Ramadan', 'Vivo', 'Bukit Datuk', 'https://img.lovepik.com/photo/50118/9025.jpg_wh860.jpg', '2021-11-25 01:56:17', '2021-11-25 13:41:34', '-', '-', 0, 0),
+(6, 'pelanggan@gmail.com', 'pelanggan', '081234548765', 'Bumi', 'https://image.freepik.com/free-photo/smiling-asian-man-standing-with-hands-folded-concept-engineering-jobs_264197-8835.jpg', '2021-11-25 13:49:21', '2021-11-30 14:53:25', '0', '0', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -389,6 +380,13 @@ CREATE TABLE `review` (
   `isi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`id`, `beli_id`, `nilai`, `isi`) VALUES
+(16, 8, 3, 'Good');
+
 -- --------------------------------------------------------
 
 --
@@ -443,7 +441,7 @@ CREATE TABLE `teknisi` (
   `teknisi_total_score` int(11) DEFAULT NULL,
   `teknisi_total_responden` int(11) DEFAULT NULL,
   `teknisi_deskripsi` text CHARACTER SET utf8mb4 DEFAULT NULL,
-  `teknisi_foto` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '-',
+  `teknisi_foto` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `teknisi_sertifikat` text CHARACTER SET utf8mb4 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -452,7 +450,7 @@ CREATE TABLE `teknisi` (
 --
 
 INSERT INTO `teknisi` (`teknisi_id`, `email`, `teknisi_nama`, `teknisi_nama_toko`, `teknisi_alamat`, `teknisi_lat`, `teknisi_lng`, `teknisi_hp`, `created_at`, `updated_at`, `teknisi_total_score`, `teknisi_total_responden`, `teknisi_deskripsi`, `teknisi_foto`, `teknisi_sertifikat`) VALUES
-(2, 'ryan@gmail.com', 'Ryan Andropal', 'Jaya Hp', 'Jalan Gapura', '1', '1', '081275753271', '2021-11-12 00:18:53', '2021-07-07 19:27:28', 50, 14, 'Yo servis disini gratis pisang', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
+(2, 'ryan@gmail.com', 'Ryan Andropal', 'Jaya Hp', 'Jalan Gapura', '1', '1', '081275753271', '2021-11-30 14:02:14', '2021-11-30 07:02:14', 124, 33, 'Yo servis disini gratis pisang', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (4, 'test@gmail.com', 'test', 'Toko I', 'PKU', '0.00', '0.00', '081275753271', '2021-11-06 22:35:17', '2021-11-02 18:46:23', 50, 14, 'Deskripsi toko I', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (5, 'test2@gmail.com', 'test2', 'test2', 'test2', '0.0', '0.0', '081275753271', '2021-11-06 22:35:18', '2021-11-02 19:01:46', 50, 14, 'test2', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
 (6, 'yaya@gmail.com', 'yaya', 'yaya', 'yaya', '0.0', '0.0', '081275753271', '2021-11-06 22:35:20', '2021-11-03 09:21:44', 50, 14, 'yaya', 'https://assets-global.website-files.com/5b6df8bb681f89c158b48f6b/5d7b6a6e00f64f8f69b8bf36_it-services-technician.jpg', 'Ryan Andropal_dummy2.jpg'),
@@ -510,7 +508,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `akses_id` int(11) DEFAULT 0,
+  `akses_id` int(11) DEFAULT NULL,
   `level` enum('teknisi','pelanggan','admin') NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -540,7 +538,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ak
 (19, 'Abdul fwefw', 'newuser5@gmail.com', NULL, '$2y$10$8FxdckTfpmReW8Q5bSEgBexIQzKjJYHIcMazXjGO9T2LC5.8ogbpi', NULL, 'teknisi', NULL, '2021-11-19 08:10:10', '2021-11-19 08:10:10'),
 (20, 'Abdul fwefw', 'newuser6@gmail.com', NULL, '$2y$10$7eYAvZ1SBdxeweAQIqqyB.E2I570EDr3aY045V9goJ2wdPPWiHESO', NULL, 'teknisi', NULL, '2021-11-19 19:10:28', '2021-11-19 19:10:28'),
 (21, 'Abdul fwefw', 'newuser7@gmail.com', NULL, '$2y$10$v6QTRtI99U4yNmbrlVSkJO/BJuT3EoW55mKr.nEztbgBv0l.cknHW', NULL, 'teknisi', NULL, '2021-11-19 19:14:31', '2021-11-19 19:14:31'),
-(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40');
+(22, 'Abdul fwefw', 'newuser8@gmail.com', NULL, '$2y$10$VUFwdXj5BpHDFrZpWk03e.TYTQBtI/kjQ.U5DwafZO2H/UaZ.LZcy', NULL, 'teknisi', NULL, '2021-11-19 19:43:40', '2021-11-19 19:43:40'),
+(24, 'Abdul Hafiz Ramadan', 'abdul123@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-11-25 01:58:26', '2021-11-25 01:58:26'),
+(25, 'pelanggan', 'pelanggan@gmail.com', NULL, '$2y$13$8nvKA6rSfrk6GadP0O1Y1.qpPCfLFylDQVl/4aq9QJyQEvd5z37DW', 0, 'pelanggan', NULL, '2021-04-09 05:11:01', '2021-11-26 01:04:07');
 
 --
 -- Indexes for dumped tables
@@ -693,19 +693,19 @@ ALTER TABLE `api`
 -- AUTO_INCREMENT for table `beli`
 --
 ALTER TABLE `beli`
-  MODIFY `beli_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `beli_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `detail_teknisi_jenis_hp`
 --
 ALTER TABLE `detail_teknisi_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `detail_teknisi_jenis_kerusakan_hp`
 --
 ALTER TABLE `detail_teknisi_jenis_kerusakan_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -777,7 +777,7 @@ ALTER TABLE `responden`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `service_handphone`
@@ -789,7 +789,7 @@ ALTER TABLE `service_handphone`
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `teknisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `teknisi_jenis_hp`
@@ -801,13 +801,13 @@ ALTER TABLE `teknisi_jenis_hp`
 -- AUTO_INCREMENT for table `teknisi_kerusakan_jenis_hp`
 --
 ALTER TABLE `teknisi_kerusakan_jenis_hp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
