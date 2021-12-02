@@ -535,4 +535,35 @@ class TeknisiApi extends Controller
 
     }
 
+    public function update_teknisi_foto(Request $request) {
+
+        $teknisiNama = DB::table('teknisi')
+            ->where('teknisi_id', '=', $request->teknisi_id)->first();
+
+        $teknisi_photo = $request->file('teknisi_foto');
+        $teknisi_photo_name = $teknisiNama->teknisi_nama.'_'.$teknisi_photo->getClientOriginalName();
+
+        $teknisi = DB::table('teknisi')
+            -> where('teknisi_id', '=', $request->teknisi_id)
+            -> update([
+                'teknisi_foto' => $teknisi_photo_name
+            ]);
+
+        $teknisi_photo->move(public_path('foto-teknisi'), $teknisi_photo_name);
+
+        if ($teknisi)
+        {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Photo berhasil diupdate Berhasil Disimpan!',
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'code' => 404,
+                'message' => 'FAILED',
+            ], 404);
+        }
+    }
 }

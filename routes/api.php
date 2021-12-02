@@ -27,6 +27,7 @@ Route::post('/teknisi-update/{id}', 'Api\TeknisiApi@update_teknisi');
 Route::delete('/teknisi-delete/{id}', 'Api\TeknisiApi@delete_teknisi');
 Route::get('/teknisi-by/{reference}/{value}', 'Api\TeknisiApi@teknisi_by');
 Route::get('/teknisi-one/{reference}/{value}', 'Api\TeknisiApi@teknisi_one_by');
+Route::post('/update-teknisi-foto/{teknisi_id}', 'Api\TeknisiApi@update_teknisi_foto');
 
 //Pelanggan
 Route::get('/pelanggan-all', 'Api\PelangganApi@pelanggan_all');
