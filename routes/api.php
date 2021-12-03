@@ -36,6 +36,7 @@ Route::post('/pelanggan-update/{id}', 'Api\PelangganApi@update_pelanggan');
 Route::delete('/pelanggan-delete/{id}', 'Api\PelangganApi@delete_pelanggan');
 Route::get('/pelanggan-by/{reference}/{value}', 'Api\PelangganApi@pelanggan_by');
 Route::get('/pelanggan-one/{reference}/{value}', 'Api\PelangganApi@pelanggan_one_by');
+Route::post('/update_pelanggan_foto/{pelanggan_id}', 'Api\PelangganApi@update_pelanggan_foto');
 
 // Jenis HP
 Route::get('/jenis-hp-all', 'Api\JenisHpApi@jenis_hp_all');

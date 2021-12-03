@@ -555,7 +555,7 @@ class TeknisiApi extends Controller
         {
             return response()->json([
                 'code' => 200,
-                'message' => 'Photo berhasil diupdate Berhasil Disimpan!',
+                'message' => 'Photo berhasil diupdate!',
             ], 200);
         }
         else

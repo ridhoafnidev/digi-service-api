@@ -180,4 +180,37 @@ class PelangganApi extends Controller
         }
 
     }
+
+    public function update_pelanggan_foto(Request $request) {
+
+        $pelanggan_table = DB::table('pelanggan')
+            ->where('pelanggan_id', '=', $request->pelanggan_id)->first();
+
+        $pelanggan_photo = $request->file('pelanggan_foto');
+        $pelanggan_photo_name = $pelanggan_table->pelanggan_nama.'_'.$pelanggan_photo->getClientOriginalName();
+
+        $pelanggan = DB::table('pelanggan')
+            -> where('pelanggan_id', '=', $request->pelanggan_id)
+            -> update([
+                'pelanggan_foto' => $pelanggan_photo_name
+            ]);
+
+        $pelanggan_photo->move(public_path('foto-pelanggan'), $pelanggan_photo_name);
+
+        if ($pelanggan)
+        {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Photo berhasil diupdate!',
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'code' => 404,
+                'message' => 'FAILED',
+            ], 404);
+        }
+    }
+
 }
