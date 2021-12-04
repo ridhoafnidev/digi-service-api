@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Pelanggan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class PelangganApi extends Controller
 {
