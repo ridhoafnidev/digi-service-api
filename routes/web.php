@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::resource('teknisi','TeknisiController');
+Route::resource('pelanggan','PelangganController');
+Route::resource('jenis-hp','JenisHpController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

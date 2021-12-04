@@ -1,23 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Pelanggan;
+use App\JenisHp;
 use Illuminate\Http\Request;
 
-class PelangganController extends Controller
+class JenisHpController extends Controller
 {
-    private $Pelanggan;
     public function __construct()
     {
-        $this->Pelanggan = new Pelanggan();
+        $this->JenisHp = new JenisHp();
 
     }
     public function index()
     {
 
-        $data['pelanggan'] = $this->Pelanggan->getPelanggan();
-        return view('pelanggan/index', $data);
+        $data['jenis_hp'] = $this->JenisHp->getJenisHp();
+        return view('jenis-hp/index', $data);
     }
 
     /**
