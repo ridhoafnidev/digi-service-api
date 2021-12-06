@@ -54,7 +54,6 @@ class PelangganApi extends Controller
         {
             if ($pelanggan_foto != null )
             {
-
                 $users->email = $request->email;
                 $users->name = $request->pelanggan_nama;
                 $users->level = "pelanggan";
@@ -88,8 +87,7 @@ class PelangganApi extends Controller
                     ], 404);
                 }
             }
-            else
-            {
+            else {
                 $users->email = $request->email;
                 $users->name = $request->pelanggan_nama;
                 $users->level = "pelanggan";
