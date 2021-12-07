@@ -541,6 +541,13 @@ class TeknisiApi extends Controller
         $teknisi_table = DB::table('teknisi')
             ->where('teknisi_id', '=', $request->teknisi_id)->first();
 
+        if (!$teknisi_table) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Teknisi tidak ditemukan!',
+            ], 404);
+        }
+
         $teknisi_photo = $request->file('teknisi_foto');
         $teknisi_photo_name = $teknisi_table->teknisi_nama.'_'.$teknisi_photo->getClientOriginalName();
 
@@ -556,15 +563,15 @@ class TeknisiApi extends Controller
         {
             return response()->json([
                 'code' => 200,
-                'message' => 'Photo berhasil diupdate!',
+                'message' => 'Photo teknisi berhasil diupdate!',
             ], 200);
         }
         else
         {
             return response()->json([
-                'code' => 404,
-                'message' => 'FAILED',
-            ], 404);
+                'code' => 500,
+                'message' => 'Internal Server Error',
+            ], 500);
         }
     }
 }
