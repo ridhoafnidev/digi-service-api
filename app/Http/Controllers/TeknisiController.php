@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Pelanggan;
 use App\Teknisi;
 use Illuminate\Http\Request;
 
@@ -83,6 +84,15 @@ class TeknisiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        $teknisi = Teknisi::where('teknisi_id', $id)->delete();
+        if ($teknisi){
+            return redirect()->route('teknisi.index')
+                ->with('success', 'Berhasil dihapus');
+        }
+    }
+
+    public function lihatSertifikat($id)
     {
         //
     }
