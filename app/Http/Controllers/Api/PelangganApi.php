@@ -46,9 +46,10 @@ class PelangganApi extends Controller
         if($this->email_check($request->email, "pelanggan") == 1)
         {
             return response()->json([
+                'code' => 400,
                 'success' => false,
                 'message' => 'Maaf, Email sudah terdaftar',
-            ], 500);
+            ], 400);
         }
         else
         {
@@ -75,16 +76,18 @@ class PelangganApi extends Controller
                 if ($users && $pelanggan)
                 {
                     return response()->json([
+                        'code' => 201,
                         'success' => true,
-                        'message' => 'Post Berhasil Disimpan!',
+                        'message' => 'Pelanggan Berhasil Disimpan!',
                     ], 200);
                 }
                 else
                 {
                     return response()->json([
+                        'code' => 500,
                         'success' => false,
                         'message' => 'Gagal Disimpan!',
-                    ], 404);
+                    ], 500);
                 }
             }
             else {
