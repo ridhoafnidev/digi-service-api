@@ -11,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class TeknisiApi extends Controller
 {
@@ -537,11 +538,18 @@ class TeknisiApi extends Controller
 
     public function update_teknisi_foto(Request $request) {
 
-        $teknisiNama = DB::table('teknisi')
+        $teknisi_table = DB::table('teknisi')
             ->where('teknisi_id', '=', $request->teknisi_id)->first();
 
+        if (!$teknisi_table) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Teknisi tidak ditemukan!',
+            ], 404);
+        }
+
         $teknisi_photo = $request->file('teknisi_foto');
-        $teknisi_photo_name = $teknisiNama->teknisi_nama.'_'.$teknisi_photo->getClientOriginalName();
+        $teknisi_photo_name = $teknisi_table->teknisi_nama.'_'.$teknisi_photo->getClientOriginalName();
 
         $teknisi = DB::table('teknisi')
             -> where('teknisi_id', '=', $request->teknisi_id)
@@ -555,15 +563,15 @@ class TeknisiApi extends Controller
         {
             return response()->json([
                 'code' => 200,
-                'message' => 'Photo berhasil diupdate!',
+                'message' => 'Photo teknisi berhasil diupdate!',
             ], 200);
         }
         else
         {
             return response()->json([
-                'code' => 404,
-                'message' => 'FAILED',
-            ], 404);
+                'code' => 500,
+                'message' => 'Internal Server Error',
+            ], 500);
         }
     }
 }

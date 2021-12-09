@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Pelanggan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class PelangganApi extends Controller
 {
@@ -184,6 +185,13 @@ class PelangganApi extends Controller
         $pelanggan_table = DB::table('pelanggan')
             ->where('pelanggan_id', '=', $request->pelanggan_id)->first();
 
+        if (!$pelanggan_table) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Pelanggan tidak ditemukan!',
+            ], 404);
+        }
+
         $pelanggan_photo = $request->file('pelanggan_foto');
         $pelanggan_photo_name = $pelanggan_table->pelanggan_nama.'_'.$pelanggan_photo->getClientOriginalName();
 
@@ -199,16 +207,15 @@ class PelangganApi extends Controller
         {
             return response()->json([
                 'code' => 200,
-                'message' => 'Photo berhasil diupdate!',
+                'message' => 'Photo pelanggan berhasil diupdate!',
             ], 200);
         }
         else
         {
             return response()->json([
-                'code' => 404,
-                'message' => 'FAILED',
-            ], 404);
-        }
+                'code' => 500,
+                'message' => 'Internal Server Error',
+            ], 500);        }
     }
 
 }
