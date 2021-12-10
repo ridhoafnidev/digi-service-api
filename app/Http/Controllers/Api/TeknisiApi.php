@@ -574,4 +574,44 @@ class TeknisiApi extends Controller
             ], 500);
         }
     }
+
+    public function update_teknisi_sertifikat(Request $request) {
+
+        $teknisi_table = DB::table('teknisi')
+            ->where('teknisi_id', '=', $request->teknisi_id)->first();
+
+        if (!$teknisi_table) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Teknisi tidak ditemukan!',
+            ], 404);
+        }
+
+        $teknisi_sertifikat = $request->file('teknisi_sertifikat');
+        $teknisi_sertifikat_name = $teknisi_table->teknisi_nama.'_'.$teknisi_sertifikat->getClientOriginalName();
+
+        $teknisi = DB::table('teknisi')
+            -> where('teknisi_id', '=', $request->teknisi_id)
+            -> update([
+                'teknisi_sertifikat' => $teknisi_sertifikat_name
+            ]);
+
+        $teknisi_sertifikat->move(public_path('foto-sertifikat'), $teknisi_sertifikat_name);
+
+        if ($teknisi)
+        {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Photo teknisi berhasil diupdate!',
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'code' => 500,
+                'message' => 'Internal Server Error',
+            ], 500);
+        }
+    }
+
 }
