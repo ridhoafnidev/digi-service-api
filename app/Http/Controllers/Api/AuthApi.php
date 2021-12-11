@@ -20,7 +20,7 @@ class AuthApi extends Controller
             {
                 $data = DB::table('users')
                     ->join('teknisi', 'teknisi.email', '=', 'users.email')
-                    ->select('users.*', 'teknisi.teknisi_id', 'teknisi.teknisi_hp as hp', 'teknisi.teknisi_alamat as alamat', 'teknisi.teknisi_foto as foto', 'teknisi.teknisi_nama_toko as nama_toko', 'teknisi.teknisi_lat as lat', 'teknisi.teknisi_lng as lng', 'teknisi.teknisi_deskripsi as deskripsi')
+                    ->select('users.*', 'teknisi.teknisi_id', 'teknisi.teknisi_hp as hp', 'teknisi.teknisi_alamat as alamat', 'teknisi.teknisi_foto as foto', 'teknisi.teknisi_sertifikat', 'teknisi.teknisi_nama_toko as nama_toko', 'teknisi.teknisi_lat as lat', 'teknisi.teknisi_lng as lng', 'teknisi.teknisi_deskripsi as deskripsi')
                     ->where('users.email', $request->email)
                     ->first();
             }

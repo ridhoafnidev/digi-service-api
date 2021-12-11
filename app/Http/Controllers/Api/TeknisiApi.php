@@ -360,7 +360,7 @@ class TeknisiApi extends Controller
                 $teknisi = Teknisi::find($teknisiRaw['teknisi_id']);
 
                 $teknisi->email = $user['email'];
-                $teknisi->teknisi_hp = $user['no_hp'];
+                $teknisi->teknisi_hp = $userRaw['no_hp'];
                 $teknisi->teknisi_nama = $userRaw['nama'];
                 $teknisi->teknisi_nama_toko = $teknisiRaw['nama_toko'];
                 $teknisi->teknisi_alamat =$teknisiRaw['teknisi_alamat'];
